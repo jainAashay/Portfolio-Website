@@ -20,7 +20,7 @@ export function Head() {
            <NavItems name={item} />
           ))}
         <li className="nav-item px-1 mt-1 align-center text-center">
-          <a className="btn btn-primary">
+          <a className="btn btn-primary fw-bold">
               Sign In
           </a>
         </li>

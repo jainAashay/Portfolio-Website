@@ -1,0 +1,62 @@
+.bubble {
+    background-color: burlywood;
+    position: relative;
+    font-size: 18px;
+    line-height: 24px;
+    max-width: 90%;
+    
+    border-radius: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    text-align: center;
+    color: #000;
+    margin: 10px;
+    animation: slideInFromBottom 0.5s ease-out;
+}
+
+.bubble-bottom-left::before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 24px solid burlywood;
+    border-right: 12px solid transparent;
+    border-top: 12px solid burlywood;
+    border-bottom: 20px solid transparent;
+    left: 32px;
+    bottom: -24px;
+}
+
+.message-bubble{
+    padding-top: 16vh;
+    padding-left: 5%;
+     padding-right: 5%;
+     height: 100vh
+}
+
+@media screen and (max-width:768px) {
+    .message-bubble{
+        padding-left: 0%;
+        padding-right: 0%;
+    }
+
+    .social-icon{
+     
+        font-size: 1rem;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+      width: 0%;
+      opacity: 0;
+    }
+    100% {
+      width:100%;
+      opacity: 1;
+    }
+  }
