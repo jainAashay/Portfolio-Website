@@ -30,10 +30,11 @@
 }
 
 .message-bubble{
-    padding-top: 14vh;
+    padding-top: 12vh;
     padding-left: 5%;
      padding-right: 5%;
-     height: 100vh
+     height: 95vh;
+    
 }
 
 @media screen and (max-width:768px) {

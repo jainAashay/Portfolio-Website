@@ -1,37 +1,61 @@
 import React from 'react'
 import './Experience.css'
+import ExperienceItem from './ExperienceItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPenClip } from '@fortawesome/free-solid-svg-icons';
 function Experience() {
+    const experience=[
+        {
+            company: "Deutsche Bank",
+            timeline : "15 May, 2023 - 7 July, 2023",
+            position: 'Summer Intern',
+            description: ["Created an Infrastructure Inventory Management System to track, control, optimize usage of resources and lifecycle management of resources with a potential of future cost savings.",
+                "Created REST APIs for multiple operations including CRUD.",
+                " Implemented the code with Sonar Coding standards and wrote Unit Tests with a high coverage."
+            ]
+        },
+        {
+            company: "Flipkart",
+            timeline : "18 January, 2024 - 28 June, 2024",
+            position : 'SDE-Intern',
+            description: [
+                "Contributed to the rapid development of applications by performing diverse tasks, including modifying multiple APIs to incorporate additional attributes.Implemented Hystrix Commands for optimised API data retrieval with fault tolerance. Crafted a nested, multi-layered trace payload of purchase orders using data from a trace API to manage the full purchase-order flow effectively.",
+                "Developed a rate-limiter for Stream Processing Application, with customized rate limits for individual streams. Implemented configurable options to either wait or drop messages when rate-limits are exceeded, enhancing resource management and streamlining onboarding of new high-load streams without further scaling.",
+                "Developed Python scripts to create metrics for fetching message production-rate across Kafka topics, and created a Grafana Dashboard for real-time monitoring and analysis.",
+                "Facilitated migration of Azkaban Jobs between clusters, effectively troubleshooting and enhancing performance across numerous tasks"
+            ]
+        },
+        {
+            company: "Flipkart",
+            timeline : "18 June, 2024 - Present",
+            position : 'SDE-1',
+            description: [
+                
+            ]
+        }
+
+
+    ]
   return (
-    <div className="row g-0">
+    <div className='bg-dark py-4'>
+        <div className='fs-1 fw-bold text-center text-white'>
+        <FontAwesomeIcon icon={faPenClip} className='text-success' />  Work Experience
+        </div>
+<div className="row g-0 pt-2">
             <div className="col-lg-7 mx-auto">
                   
                 <ul className="timeline">
-                    <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                        <div className="timeline-arrow"></div>
-                        <h2 className="h5 mb-0">Title of section 1</h2><span className="small text-gray"><i className="fa fa-clock-o mr-1"></i>15 May, 2023 - 7 July, 2023</span>
-                        <p className="text-small mt-2 font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                    </li>
-                    <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                        <div className="timeline-arrow"></div>
-                        <h2 className="h5 mb-0">Title of section 2</h2><span className="small text-gray"><i className="fa fa-clock-o mr-1"></i>5 April, 2019</span>
-                        <p className="text-small mt-2 font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper.</p>
-                        <p className="text-small mt-2 font-weight-light">Libero expedita explicabo eius fugiat quia aspernatur autem laudantium error architecto recusandae natus sapiente sit nam eaque, consectetur porro molestiae ipsam! Deleniti.</p>
-                    </li>
-                    <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                        <div className="timeline-arrow"></div>
-                        <h2 className="h5 mb-0">Title of section 3</h2><span className="small text-gray"><i className="fa fa-clock-o mr-1"></i>18 August, 2019</span>
-                        <p className="text-small mt-2 font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                    </li>
-                    <li className="timeline-item bg-white rounded ml-3 p-4 shadow">
-                        <div className="timeline-arrow"></div>
-                        <h2 className="h5 mb-0">Title of section 4</h2><span className="small text-gray"><i className="fa fa-clock-o mr-1"></i>10 October, 2019</span>
-                        <p className="text-small mt-2 font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                        <p className="text-small mt-2 font-weight-light">Voluptatibus temporibus esse illum eum aspernatur, fugiat suscipit natus! Eum corporis illum nihil officiis tempore. Excepturi illo natus libero sit doloremque, laborum molestias rerum pariatur quam ipsam necessitatibus incidunt, explicabo.</p>
-                    </li>
+                {experience.map((item, index) => (
+                    <ExperienceItem data={item} />
+                ))}
+
+                    
                 </ul>
 
             </div>
         </div>
+    </div>
+    
   )
 }
 

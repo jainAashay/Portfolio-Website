@@ -3,7 +3,7 @@ import Bubble from './Bubble';
 
 function Front() {
   return (
-    <div className='bg-primary pb-1'>
+    <div className='bg-primary'>
       <div className="row no-glutters g-0 fs-1 fw-bold message-bubble">
         <div className="col" style={{ width: '30%' }}>
           <img src={process.env.PUBLIC_URL + '/images/hello.gif'} alt=""
