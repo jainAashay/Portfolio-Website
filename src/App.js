@@ -3,6 +3,7 @@ import Head from './Head';
 import Front from './Front';
 import Experience from './Experience';
 import About from './About';
+import Achievements from './Achievements';
 function App() {
   
   return (
@@ -11,6 +12,8 @@ function App() {
     <Front/>
     <About/>
     <Experience/>
+    <Achievements/>
+    
     </>
     
   )
