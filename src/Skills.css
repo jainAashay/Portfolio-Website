@@ -1,0 +1,12 @@
+
+
+@media screen and (max-width : 841px) {
+    .skills{
+         width: 90%!important;
+    }
+}
+
+.skills{
+    width:70%;
+    
+}

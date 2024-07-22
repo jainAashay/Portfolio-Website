@@ -4,7 +4,7 @@ import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import ProfileButton from './ProfileButton';
 function AchievementItem(props) {
     return (
-        <div className='row shadow rounded my-2 bg-warning'>
+        <div className='row shadow rounded my-2 bg-warning' >
             <div className='col-md-4 py-1'>
                 <img src={process.env.PUBLIC_URL + '/images/achievements/' + props.AchievementItem.image} style={{ width: '100%', height: '100%', maxHeight: '35vh',minHeight:'20vh'}} className='rounded' />
             </div>
