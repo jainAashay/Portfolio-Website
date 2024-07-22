@@ -21,20 +21,20 @@ function Skills() {
       </div>
 
       <div className='container-fluid skills text-center bg-dark shadow rounded pb-3'>
-        <div id="carouselExampleRide" className="carousel slide" data-bs-ride="true">
+        <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
 
           {groupedSkills.map((item, index) => (
 
             <SkillsItem data={item} key={index} />
           ))}
 
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+          <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
           </button>
         </div>
 
