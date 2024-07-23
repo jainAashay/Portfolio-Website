@@ -5,6 +5,7 @@ import Experience from './Experience';
 import About from './About';
 import Achievements from './Achievements';
 import Skills from './Skills';
+import Education from './Education';
 function App() {
   
   return (
@@ -15,6 +16,7 @@ function App() {
     <Experience/>
     <Achievements/>
     <Skills/>
+    <Education/>
     
     </>
     
