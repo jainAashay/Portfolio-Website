@@ -14,7 +14,7 @@ function Skills() {
     groupedSkills.push(skillsWithIds.slice(i, i + 8));
   }
   return (
-    <div className="pb-5" style={{ backgroundColor: 'coral'}}>
+    <div className="pb-5" style={{ backgroundColor: 'coral' }}>
 
       <div className='text-center fw-bold fs-1 text-dark py-3'>
         <FontAwesomeIcon icon={faCode} />  Skills
@@ -22,23 +22,23 @@ function Skills() {
 
       <div className='container-fluid skills text-center bg-dark shadow rounded pb-3'>
         <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
+          <div className="carousel-inner">
+            {groupedSkills.map((item, index) => (
 
-          {groupedSkills.map((item, index) => (
+              <SkillsItem data={item} key={index} />
+            ))}
 
-            <SkillsItem data={item} key={index} />
-          ))}
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
 
-          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
         </div>
-
-
       </div>
 
     </div>
