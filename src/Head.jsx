@@ -8,7 +8,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export function Head() {
   const items=["Home","About","Experience","Achievements","Skills","Contact"]
   return (
-    <nav className="navbar navbar-expand-lg bg-warning">
+    <nav className="navbar navbar-expand-lg bg-warning sticky-top" >
   <div className="container-fluid">
     <a className="navbar-brand fw-bold fs-4 ps-2" href="#">Aashay Jain</a>
     <button className="navbar-toggler bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,7 +20,7 @@ export function Head() {
            <NavItems name={item} />
           ))}
         <li className="nav-item px-1 mt-1 align-center text-center">
-          <a className="btn btn-primary fw-bold">
+          <a className="btn btn-primary fw-bold" style={{width:'100%'}}>
               Sign In
           </a>
         </li>
