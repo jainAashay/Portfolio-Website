@@ -1,0 +1,8 @@
+@media screen and (max-width : 841px) {
+    .projects{
+         width: 90% !important;
+    }
+}
+.projects{
+    width: 80%;
+}

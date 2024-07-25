@@ -9,7 +9,6 @@ function SkillsItem(props) {
     }
     return (
 
-
         <div className={`carousel-item ${active === true ? 'active' : ''}`} data-bs-interval="2000">
             <div className='row' >
 
