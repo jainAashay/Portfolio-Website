@@ -11,7 +11,7 @@ function Projects() {
         {
             image: 'bigdataPrivacy',
             heading: 'Privacy in Big data',
-            description: ' Implemented privacy measures for Big Data by integrating advanced Pseudonymization techniques with K-anonymity, L-diversity, and T-closeness. This solution ensures robust privacy while maintaining data utility'
+            description: ' Implemented privacy measures for Big Data by integrating advanced Pseudonymization techniques with K-anonymity, L-diversity, and T-closeness. This solution ensures robust privacy while maintaining data utility.'
         },
         {
             image: 'nextWord',
@@ -52,23 +52,20 @@ function Projects() {
     
         
     return (
-        <div style={{ backgroundColor: 'hotpink' }}>
+        <div style={{ backgroundColor: 'cornflowerblue' }}>
             <div className='py-3 text-center fw-bold fs-1'>
                 <FontAwesomeIcon icon={faDesktop} className='fs-2' /> Projects
             </div>
-            <div className='container projects text-center'>
-                <div className='row' style={{ marginRight: '12px' }}>
+            <div className='container text-center'>
+                <div className='row justify-content-around text-center'>
                     {
                         visibleProjects.map((item, index) => (
-
                             <ProjectItem data={item} key={index} />
-
-
                         ))
-                    }
+                    } 
                 </div>
                 
-                <div className='row collapse pb-3' id="collapseExample" style={{ marginRight: '12px' }}>
+                <div className='row justify-content-around collapse pb-3 text-center' id="collapseExample" >
                     {
                         hiddenProjects.map((item, index) => (
 
@@ -79,8 +76,8 @@ function Projects() {
                     }
                 </div>
 
-                <button type="button" className="btn btn-outline-primary fw-bold mb-4" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={handleClick}>
-                   <FontAwesomeIcon icon={faEye} /> {isToggled ? 'View more Projects ..' : 'View Less'}
+                <button type="button" className="btn fw-bold mb-4" style={{backgroundColor:'hotpink'}} data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={handleClick}>
+                   <FontAwesomeIcon icon={faEye} /> {isToggled ? 'View more Projects ...' : 'View Less...'}
                     </button>
 
             </div>
