@@ -13,7 +13,7 @@ function ProjectItem(props) {
 
   return (
     
-<div className='m-3 text-center shadow rounded px-0' style={{width: '20rem',height:'fit-content',backgroundColor:'bisque'}}>
+<div className='col-sm-12 col-4 my-3 shadow rounded px-0' style={{width: '20rem',height:'fit-content',backgroundColor:'bisque'}}>
     <img src={process.env.PUBLIC_URL + '/images/Projects/'+props.data.image+'.jpg'}  style={{height:'10rem',width:'100%',display:'block'}} className='rounded' alt="..." />
     <div className='text-center text-dark pb-2 px-2' >
         <h5 className="pt-2 fw-bold">{props.data.heading}</h5>
@@ -22,6 +22,10 @@ function ProjectItem(props) {
         </p>
         
         
+    </div>
+    <div>
+       <a href={props.data.projectCode} target='_blank' rel="noreferrer" className='btn btn-primary btn-sm float-start m-2'>Project Code</a>
+       <a href={props.data.projectLink} target='_blank' rel="noreferrer" className='btn btn-primary btn-sm float-end m-2'>Live Project</a>
     </div>
     
 </div>
