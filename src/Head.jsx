@@ -31,5 +31,5 @@ export function Head() {
   )
 }
 
-export default Head;
+export default Head
 
