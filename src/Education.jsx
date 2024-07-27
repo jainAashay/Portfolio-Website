@@ -29,7 +29,7 @@ function Education() {
             <div className='mx-auto pb-4' style={{ width: '70%' }}>
                 {
                     education.map((item, index) => (
-                        <EducationItem data={item} />
+                        <EducationItem data={item} key={index}/>
                     ))
                 }
             </div>

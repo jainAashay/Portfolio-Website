@@ -5,7 +5,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 function ProfileButton(props) {
   return (
     <div className="py-2 ps-1">
-                    <a href={props.profileLink} target="_blank" class="btn btn-sm btn-primary">View
+                    <a href={props.profileLink} target="_blank" className="btn btn-sm btn-primary">View
                         Profile
                         &nbsp;<FontAwesomeIcon icon={faCircleUser}/></a>
                 </div>

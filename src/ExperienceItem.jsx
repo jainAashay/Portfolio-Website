@@ -21,7 +21,7 @@ function ExperienceItem(props) {
      <div className="text-small mt-2 font-weight-light">
      {props.data.description.map((item, index) => (
                     
-                    <div className='pb-2'>
+                    <div className='pb-2' key={index}>
                     <FontAwesomeIcon icon={faThumbsUp} className='text-success' /> &nbsp;
                     <span > {item}</span>  
                     

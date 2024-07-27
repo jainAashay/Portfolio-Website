@@ -61,7 +61,7 @@ function Achievements() {
       <div className="container achievements">
       {achievements.map((item, index) => (
         
-                    <AchievementItem AchievementItem={item} />
+                    <AchievementItem AchievementItem={item} key={index}/>
                 ))}
               
         

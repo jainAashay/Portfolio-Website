@@ -13,7 +13,6 @@ function SkillsItem(props) {
             <div className='row' >
 
                 {items.map((item, index) => (
-                    <>
                         <div className='col-lg-3 col-md-6 col-6 p-2' key={index}>
                             <div className='text-center'>
                                 <img src={'https://img.icons8.com/?size=100&id=' + item[1] + '&format=png&color=000000'} alt='' className='p-3' style={{ width: '70%', aspectRatio: '1' }} />
@@ -23,7 +22,7 @@ function SkillsItem(props) {
                             </div>
 
                         </div>
-                    </>
+                    
 
                 ))}
 

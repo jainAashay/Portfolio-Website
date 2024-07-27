@@ -46,7 +46,7 @@ function Experience() {
                   
                 <ul className="timeline">
                 {experience.map((item, index) => (
-                    <ExperienceItem data={item} />
+                    <ExperienceItem data={item} key={index} />
                 ))}
 
                     
