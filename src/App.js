@@ -8,6 +8,7 @@ import Education from './Education';
 import Projects from './Projects';
 import Contact from './Contact';
 import Head from './Head';
+import Footer from './Footer';
 function App() {
   
   return (
@@ -21,6 +22,7 @@ function App() {
     <Education/>
     <Projects/>
     <Contact/>
+    <Footer/>
     
     </>
     
