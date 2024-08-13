@@ -8,7 +8,7 @@ import Model from './Model'
 
 
 export function Head() {
-  const items = ["Home", "About", "Experience", "Achievements", "Skills", "Contact"]
+  const items = ["Home", "About", "Experience", "Achievements", "Skills","Projects", "Contact"]
   return (
     <><nav className="navbar navbar-expand-lg bg-warning sticky-top" >
       <div className="container-fluid">
