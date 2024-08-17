@@ -1,14 +1,50 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Head.css'
 import './NavItems'
 import NavItems from './NavItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Model from './Model'
-
+import Cookies from 'js-cookie';
+import axios from 'axios'
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 export function Head() {
-  const items = ["Home", "About", "Experience", "Achievements", "Skills","Projects", "Contact"]
+
+  const [authStatus, setAuthStatus] = useState('Log In');
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const loggedIn = Cookies.get('loggedIn');
+      if (loggedIn === "true") {
+        setAuthStatus('Sign Out');
+        const authBtn = document.getElementById('signin');
+        authBtn.style.backgroundColor = 'red';
+      } 
+      else {
+        setAuthStatus('Log In');
+      }
+    };
+    checkAuthStatus();
+  }, []); // Empty dependency array means this runs once on component mount
+
+  const handleClick = async () => {
+    const loggedIn = Cookies.get('loggedIn');
+    if (loggedIn === "true") {
+      await axios.post('https://backend-apis-latest.onrender.com/auth/signout', {}, { withCredentials: true });
+      Cookies.remove('loggedIn');
+      window.location.href = '/'; 
+    } 
+    else {
+      const modalElement = document.getElementById('exampleModal');
+      if (modalElement) {
+        const modal = new window.bootstrap.Modal(modalElement);
+        modal.show();
+      }
+    }
+  };
+
+  const items = ["Home", "About", "Experience", "Achievements", "Skills", "Projects", "Contact"]
   return (
     <><nav className="navbar navbar-expand-lg bg-warning sticky-top" >
       <div className="container-fluid">
@@ -22,10 +58,9 @@ export function Head() {
               <NavItems name={item} key={index} />
             ))}
             <li className="nav-item px-1 mt-1 align-center text-center">
-              <button type='button' className="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#exampleModal" style={{ width: '100%' }}>
-                Sign In
+              <button type='button' id='signin' onClick={handleClick} className="btn btn-primary fw-bold" data-bs-target="#exampleModal" style={{ width: '100%' }}>
+                {authStatus}
               </button>
-
 
             </li>
           </ul>
@@ -35,9 +70,7 @@ export function Head() {
     </nav>
       <Model />
     </>
-
   )
 }
-
 export default Head
 
