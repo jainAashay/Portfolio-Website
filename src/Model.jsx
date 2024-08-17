@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import './Model.css'
 import axios from 'axios';
-
+import Cookies
+ from 'js-cookie';
 function Model() {
 
     const [username, setUsername] = useState('');
