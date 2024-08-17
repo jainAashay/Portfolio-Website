@@ -13,17 +13,23 @@ function Model() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('http://localhost:8080/auth/login', {
+          const response = await axios.post('https://backend-apis-latest.onrender.com/auth/login', {
             username: username,
             password: password
+          },{
+            withCredentials:true
           });
     
           if (response.status === 200) {
+            console.log('Login was successful')
+            console.log(Cookies.get('loggedIn'));
+    
             setMessage('Login was successful!');
             document.getElementById('modalClose').click();
             window.location.reload();
           }
         } catch (error) {
+          console.error(error);
           if (error.response) {
             // Handle error responses from the server
             if (error.response.status === 401) {

@@ -30,6 +30,7 @@ export function Head() {
 
   const handleClick = async () => {
     const loggedIn = Cookies.get('loggedIn');
+    console.log(Cookies.get('loggedIn'));
     if (loggedIn === "true") {
       await axios.post('https://backend-apis-latest.onrender.com/auth/signout', {}, { withCredentials: true });
       Cookies.remove('loggedIn');
