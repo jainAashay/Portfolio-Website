@@ -1,0 +1,32 @@
+/* Define keyframes for the transitions */
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-20%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInFromRight {
+    0% {
+      transform: translateX(20%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Apply the animations based on direction */
+  .slide-in-left {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  
+  .slide-in-right {
+    animation: slideInFromRight 1s ease-out;
+  }
+  

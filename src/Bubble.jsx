@@ -3,6 +3,7 @@ import './Bubble.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faGithub, faInstagram } from '@fortawesome/free-brands-svg-icons';
 function Bubble() {
+  
   return (
     <div className='bubble bubble-bottom-left'>
 

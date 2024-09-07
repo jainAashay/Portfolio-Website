@@ -1,0 +1,17 @@
+/* Define the keyframes for the left-to-right transition */
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-20%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Apply the animation to the image */
+ .slide-in {
+    animation: slideInFromLeft 1s ease-out;
+  }
+  

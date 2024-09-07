@@ -6,6 +6,7 @@ import { faPenClip } from '@fortawesome/free-solid-svg-icons';
 function Experience() {
     const experience=[
         {
+            id:0,
             company: "Deutsche Bank",
             timeline : "15 May, 2023 - 7 July, 2023",
             position: 'Summer Intern',
@@ -15,6 +16,7 @@ function Experience() {
             ]
         },
         {
+            id:1,
             company: "Flipkart",
             timeline : "18 January, 2024 - 28 June, 2024",
             position : 'SDE-Intern',
@@ -26,6 +28,7 @@ function Experience() {
             ]
         },
         {
+            id:2,
             company: "Flipkart",
             timeline : "18 June, 2024 - Present",
             position : 'SDE-1',
@@ -35,7 +38,9 @@ function Experience() {
         }
 
 
-    ]
+    ];
+
+    
   return (
     <div className='bg-dark py-4'>
         <div className='fs-1 fw-bold text-center text-white'>

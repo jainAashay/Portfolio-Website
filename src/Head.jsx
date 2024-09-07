@@ -4,7 +4,7 @@ import './NavItems'
 import NavItems from './NavItems'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import Model from './Model'
+import Model from './Model_Login'
 import Cookies from 'js-cookie';
 import axios from 'axios'
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -15,25 +15,25 @@ export function Head() {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const loggedIn = Cookies.get('loggedIn');
-      if (loggedIn === "true") {
+      const loginToken = Cookies.get('login_token');
+      if (loginToken) {
         setAuthStatus('Sign Out');
         const authBtn = document.getElementById('signin');
         authBtn.style.backgroundColor = 'red';
       } 
       else {
         setAuthStatus('Log In');
+        const authBtn = document.getElementById('signin');
+        authBtn.style.backgroundColor = 'blue';
       }
     };
     checkAuthStatus();
   }, []); // Empty dependency array means this runs once on component mount
 
   const handleClick = async () => {
-    const loggedIn = Cookies.get('loggedIn');
-    console.log(Cookies.get('loggedIn'));
-    if (loggedIn === "true") {
-      await axios.post('https://backend-apis-latest.onrender.com/auth/signout', {}, { withCredentials: true });
-      Cookies.remove('loggedIn');
+    const loginToken = Cookies.get('login_token');
+    if (loginToken) {
+      Cookies.remove('login_token');
       window.location.href = '/'; 
     } 
     else {
