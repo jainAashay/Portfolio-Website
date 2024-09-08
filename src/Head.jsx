@@ -26,15 +26,17 @@ export function Head() {
     checkAuthStatus();
   }, []);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const loginToken = Cookies.get('login_token');
     if (loginToken) {
       Cookies.remove('login_token');
       window.location.href = '/'; 
-    } else {
+    } 
+    else {
       const modalElement = document.getElementById('exampleModal');
       if (modalElement) {
-        // Directly use `react-bootstrap` modal functionality here if needed
+        const modal = new window.bootstrap.Modal(modalElement);
+        modal.show();
       }
     }
   };
@@ -52,9 +54,9 @@ export function Head() {
           <Navbar.Collapse id="navbarNav" className="fs-5">
             <Nav className="ms-auto fw-bold">
               {items.map((item, index) => (
-                
+                <Nav.Item key={index}>
                   <NavItems name={item} key={index} />
-             
+                </Nav.Item>
               ))}
               <Nav.Item className="px-1 mt-1 align-center text-center">
                 <Button id="signin" onClick={handleClick} className="fw-bold" style={{ width: '100%' }}>
