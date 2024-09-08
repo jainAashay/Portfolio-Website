@@ -8,6 +8,7 @@ import './Projects.css';
 function Projects() {
     const projects = [
         {
+            id:0,
             image: 'IPL',
             heading: 'IPL Match Predictor',
             description: 'Developed a predictive model to estimate the winning chance percentage for the batting team at any given moment during the second innings. This model aids in advanced decision-making for team performance analysis. Achieved training and test accuracy rates exceeding 92%.',
@@ -15,6 +16,7 @@ function Projects() {
             projectLink: 'https://colab.research.google.com/drive/1cDeFd1XlDBarUTEJJF56IqS2Bcw-8S0d?usp=sharing'
         },
         {
+            id:1,
             image: 'bigdataPrivacy',
             heading: 'Privacy in Big data',
             description: ' Implemented privacy measures for Big Data by integrating advanced Pseudonymization techniques with K-anonymity, L-diversity, and T-closeness. This solution ensures robust privacy while maintaining data utility.',
@@ -22,6 +24,7 @@ function Projects() {
             projectLink: 'https://colab.research.google.com/drive/1IjdUGVJa1pdYAZl03s56gKYbNQVd48hG?usp=sharing'
         },
         {
+            id:2,
             image: 'nextWord',
             heading: 'Next Words Predictor',
             description: 'Developed a model that allows users to input a sentence and select the number of words they want to predict. The model then generates a continuation of the sentence based on the input, providing contextually relevant and accurate predictions.',
@@ -29,6 +32,7 @@ function Projects() {
             projectLink: 'https://colab.research.google.com/drive/1mq9Pd1vXcSTw8Jdy7Tk-BZ9Qn08ItMvF?usp=sharing'
         },
         {
+            id:3,
             image: 'DBB',
             heading: 'Student Information Manager',
             description: 'Developed a full-stack web application for managing student information with login authentication, enabling users to perform CRUD operations on a Student Information Table. Enhanced the application by adding features for easy data import and preview from CSV files, and implemented advanced filtering options on multiple columns to offer tailored views of student data.',
@@ -36,6 +40,7 @@ function Projects() {
             projectLink: 'https://aashay26.pythonanywhere.com/records'
         },
         {
+            id:4,
             image: 'rkg',
             heading: 'Random Quote Generator',
             description: 'Created a fully responsive ReactJS website utilizing HTML, Bootstrap, and JavaScript. The site integrates with APIs to fetch and display famous quotes organized by categories. Users can browse quotes by category, providing an engaging and dynamic way to explore inspirational and noteworthy quotes.',
@@ -43,6 +48,7 @@ function Projects() {
             projectLink: 'https://654689f362a9b2384bdf648d--strong-treacle-39a62b.netlify.app/'
         },
         {
+            id:5,
             image: 'login',
             heading: 'Login Authentication System',
             description: 'Developed and hosted a responsive webpage that allows users to securely log in to access protected content. The site also features a user registration system with email verification, ensuring secure account creation and user authentication.',
