@@ -8,7 +8,7 @@ function Test() {
       const token = Cookies.get('login_token');
       console.log(token);
       try{
-        const response = await axios.get('http://127.0.0.1:5000/get_name', {
+        const response = await axios.get('https://backend-apis-vcdm.onrender.com/get_name', {
           headers: {
             Authorization: `Bearer ${token}` // Set the Bearer token in the Authorization header
           }
