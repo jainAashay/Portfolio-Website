@@ -1,8 +1,31 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import './Contact.css'
+import axios from 'axios';
+
+function createMessage(name, email, message){
+    return 'A message received from '+name+'\n'+'Email : '+email+'\n'+'Message : '+message;
+}
 function Contact() {
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        try {
+          const response = await axios.post('http://127.0.0.1:5000/email/send', {
+            email: 'jainaashay123@gmail.com',
+            message: createMessage(name,email,message)
+          });
+          alert(response.data.message);
+        } catch (err) {
+          console.error('Error sending email:', err);
+        }
+      };
+
     return (
         <div style={{backgroundColor:'antiquewhite'}}>
             <div className='text-center fw-bold fs-1 py-4'><FontAwesomeIcon icon={faComment} style={{color:'red'}} /> 
@@ -23,10 +46,10 @@ function Contact() {
                    </div>
                    <div className='px-4'>
                     <form action='/' method='POST'>
-                    <input className="form-control form-control-md my-4" type="text" placeholder="Your Name" aria-label=".form-control-md"/>
-                   <input className="form-control form-control-md my-4" type="text" placeholder="Your Email" aria-label=".form-control-md"/>
-                   <textarea className="form-control form-control-md my-4" rows='5' placeholder="Write a message .." aria-label=".form-control-md"/>
-                   <button type='submit' className='btn btn-primary btn-md px-3' style={{backgroundColor:'blueviolet'}}>Send Message</button>
+                    <input value={name} className="form-control form-control-md my-4" type="text" placeholder="Your Name" aria-label=".form-control-md" onChange={(e) => setName(e.target.value)}/>
+                   <input value={email} className="form-control form-control-md my-4" type="text" placeholder="Your Email" aria-label=".form-control-md" onChange={(e) => setEmail(e.target.value)}/>
+                   <textarea value={message} className="form-control form-control-md my-4" rows='5' placeholder="Write a message .." aria-label=".form-control-md" onChange={(e) => setMessage(e.target.value)}/>
+                   <button type='submit' className='btn btn-primary btn-md px-3' style={{backgroundColor:'blueviolet'}} onClick={handleSubmit}>Send Message</button>
                     </form>
                   
                    </div>
