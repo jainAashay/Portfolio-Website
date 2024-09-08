@@ -16,7 +16,7 @@ function Contact() {
         event.preventDefault();
     
         try {
-          const response = await axios.post('https://jainaashay1000.pythonanywhere.com/email/send', {
+          const response = await axios.post('https://backend-apis-vcdm.onrender.com/email/send', {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });
