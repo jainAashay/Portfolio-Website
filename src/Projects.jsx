@@ -64,7 +64,7 @@ function Projects() {
     const [open, setOpen] = useState(false);  // Manage open/close state with React
 
     return (
-        <div style={{ backgroundColor: 'cornflowerblue' }}>
+        <div style={{ backgroundColor: 'cornflowerblue',overflow:'hidden' }}>
             <div className='py-3 text-center fw-bold fs-1'>
                 <FontAwesomeIcon icon={faDesktop} className='fs-2' /> Projects
             </div>
