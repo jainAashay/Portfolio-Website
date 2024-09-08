@@ -16,7 +16,7 @@ function Contact() {
         event.preventDefault();
     
         try {
-          const response = await axios.post('http://127.0.0.1:5000/email/send', {
+          const response = await axios.post('https://jainaashay1000.pythonanywhere.com/email/send', {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });

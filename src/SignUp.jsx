@@ -13,7 +13,7 @@ function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:5000/signup', {
+            const response = await axios.post('https://jainaashay1000.pythonanywhere.com/signup', {
                 name: name,
                 password: password,
                 email: username + '@gmail.com'
