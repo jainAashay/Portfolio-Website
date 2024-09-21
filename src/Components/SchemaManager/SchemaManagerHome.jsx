@@ -51,7 +51,7 @@ function SchemaManagerHome() {
     // Filter schemas based on the search input
     setFilteredSchemas(
       schemas.filter(schema => 
-        schema.name.toLowerCase().includes(search.toLowerCase())
+        schema.toLowerCase().includes(search.toLowerCase())
       )
     );
   };
