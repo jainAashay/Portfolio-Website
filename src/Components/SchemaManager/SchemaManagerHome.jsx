@@ -47,11 +47,13 @@ function SchemaManagerHome() {
     );
   }, [search, schemas]);
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    const value = e.target.value; // Get the input value
+    setSearch(value); // Update the search state
     // Filter schemas based on the search input
     setFilteredSchemas(
-      schemas.filter(schema => 
-        schema.toLowerCase().includes(search.toLowerCase())
+      schemas.filter(schema =>
+        schema.toLowerCase().includes(value.toLowerCase())
       )
     );
   };
