@@ -6,6 +6,8 @@ import './SchemaManager.css'
 import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import CreateSchemaModal from './CreateSchemaModal';
+import backend_endpoint from '../Constants';
 
 function SchemaManagerHome() {
   const [schemas, setSchemas] = useState([]);
@@ -17,12 +19,13 @@ function SchemaManagerHome() {
   const fetchSchemas = async () => {
     try {
       const loginToken=Cookies.get('login_token');
-      const response = await axios.get('https://backend-apis-vcdm.onrender.com/schemas/view', {
+      console.log(backend_endpoint);
+      const response = await axios.get(backend_endpoint+'/schemas/view', {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         }
       });
-      console.log(response.data);
+      
       setSchemas(response.data.schemas);
       setFilteredSchemas(response.data.schemas); 
     } catch (error) {
@@ -60,7 +63,7 @@ function SchemaManagerHome() {
 
   const handleDelete = async (schema) => {
     const loginToken=Cookies.get('login_token');
-        const response = await axios.delete('https://backend-apis-vcdm.onrender.com/schema/'+schema+'/delete', {
+        const response = await axios.delete(backend_endpoint+'/schema/'+schema+'/delete', {
           headers: {
             Authorization: `Bearer ${loginToken}` // Set the authorization header
           }
@@ -77,7 +80,7 @@ function SchemaManagerHome() {
 
   const handleCreate = async (schema) => {
     const loginToken=Cookies.get('login_token');
-        const response = await axios.delete('https://backend-apis-vcdm.onrender.com/schema/'+schema+'/delete', {
+        const response = await axios.delete(backend_endpoint+'/schema/'+schema+'/delete', {
           headers: {
             Authorization: `Bearer ${loginToken}` // Set the authorization header
           }
@@ -94,6 +97,7 @@ function SchemaManagerHome() {
 
   return (
     <div style={{backgroundColor:'skyblue'}}>
+      <CreateSchemaModal/>
       <div className="container pt-4 responsive-container" style={{ width: '60%' }}>
         <div className='py-3 text-center'>
           <h1 className='fw-bold pb-2 text-danger'>Schema Manager</h1>
@@ -110,7 +114,7 @@ function SchemaManagerHome() {
           </InputGroup>
           </div>
           <div className='col-5 g-0'>
-          <Button className='float-end' variant="primary">Create New <FontAwesomeIcon icon={faPlus} /></Button>
+          <Button className='float-end' data-bs-toggle="modal" data-bs-target="#createSchemaModal" variant="primary">Create New <FontAwesomeIcon icon={faPlus} /></Button>
           </div>
           
         </div>
@@ -148,7 +152,7 @@ function SchemaManagerHome() {
             className='action-item pt-1'
             icon={faSquarePlus}
             style={{ color: 'black' }}
-            onClick={() => handleDelete(schema.id)}
+            onClick={() => handleCreate(schema.id)}
           />
           <FontAwesomeIcon 
             className='action-item pt-1'

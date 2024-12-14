@@ -1,0 +1,35 @@
+@media screen and (max-width:800px) {
+    #x {
+        width: 90%;
+    }
+
+    #y {
+        display: none;
+    }
+
+}
+
+@media screen and (min-width:800px) {
+    #x {
+        width: 50%;
+    }
+
+    #z {
+        display: none;
+    }
+}
+
+td{
+    border-radius: 5%;
+    border: inset;
+    padding: 5px;
+    vertical-align: middle;
+
+}
+th{
+    background-color: cyan !important;
+    border-radius: 5%;
+    border: inset;
+    padding: 5px;
+    vertical-align: middle;
+}

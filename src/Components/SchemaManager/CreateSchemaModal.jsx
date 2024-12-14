@@ -1,31 +1,93 @@
 import React from 'react'
+import { useState } from 'react';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+import backend_endpoint from '../Constants';
+import Cookies from 'js-cookie';
 
 function CreateSchemaModal() {
-  return (
-    <div>
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <form >
-              <div class="modal-header">
+  const [filterItems, setFilterItems] = useState([]); // State to hold the list of items
+  const [inputFilter, setInputFilter] = useState(''); // State to hold the input value
+  const [inputSchemaName,setInputSchemaName] = useState('');
+  function handleAddItem() {
+    if (filterItems.length >= 5) {
+      return; // Prevent adding more than 5 items
+    }
+    // Create a new array and add the new item
+    const newFilterList = [...filterItems, inputFilter];
+    setFilterItems(newFilterList); // Update the state with the new array
+    setInputFilter(""); // Clear the input field after adding
+  }
+  const handleRemoveItem = (index) => {
+    setFilterItems(filterItems.filter((_, i) => i !== index));
+  };
 
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+  async function handleCreateSchema(){
+    const request={
+      "name": inputSchemaName,
+      "filters": filterItems
+    }
+
+    try{
+      const loginToken=Cookies.get('login_token');
+      const response = await axios.post(backend_endpoint+'/schema/create',request, {
+        headers: {
+          Authorization: `Bearer ${loginToken}` // Set the authorization header
+        }
+      });
+      if(response.status==200){
+        document.querySelector('.btn-close').click();
+      }
+      else{
+        alert(response.data.message);
+      }
+    }
+    catch(error){
+       console.log(error);
+    }
+
+  }
+
+  return (
+    <div className="modal fade" id="createSchemaModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content bg-dark">
+          <div className="modal-header">
+            <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel" style={{ color: 'coral' }}>Create New Schema</h1>
+            <button type="button" className="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+            <div className="modal-body text-light">
+              <div className="form-group">
+                <label htmlFor="schemaName" className='mb-3 fs-5 text-info fw-bold'>Enter name for your schema :</label>
+                <input type="text" className="form-control" value={inputSchemaName} onChange={(e) => setInputSchemaName(e.target.value)} placeholder="Provide name for your schema" />
               </div>
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="schemaName">Schema Name</label>
-                  <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Provide name of schema" />
+              <div className="form-group my-2">
+                <label htmlFor="filter" className='my-3 fs-5 text-info fw-bold'>Choose attributes to apply search filter : <span class="badge text-bg-danger">Max 5</span> </label>
+                <div className='input-group'>
+                  <input type="text" className="form-control me-2" placeholder="Enter attribute name to used for search" value={inputFilter} onChange={(e) => setInputFilter(e.target.value)}/>
+                  <button className="btn btn-primary btn-success fw-bold px-3" onClick={handleAddItem}>
+                    Add <FontAwesomeIcon icon={faPlus} />
+                  </button>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+              <div className='py-2'>
+                {filterItems.map((item, index) => (
+                  <li key={index} className="bg-warning text-dark fw-bold shadow p-2 fs-6 my-2 rounded list-group-item d-flex justify-content-between align-items-center">
+                    {item}
+                    <button className="btn-close" onClick={() => handleRemoveItem(index)} aria-label="Close"></button>
+                  </li>
+                ))}
               </div>
-            </form>
-          </div>
+
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" className="btn btn-primary" onClick={handleCreateSchema}>Create</button>
+            </div>
+          
         </div>
       </div>
     </div>

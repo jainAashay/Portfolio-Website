@@ -4,6 +4,7 @@ import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import './Model.css'
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import backend_endpoint from '../Constants';
 
 function Login() {
 
@@ -14,7 +15,7 @@ function Login() {
     const handleAuth = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('https://backend-apis-vcdm.onrender.com/login', {
+          const response = await axios.post(backend_endpoint+'/login', {
             username: username,
             password: password
           });

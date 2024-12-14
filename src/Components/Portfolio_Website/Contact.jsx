@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import './Contact.css'
 import axios from 'axios';
+import backend_endpoint from '../Constants';
 
 function createMessage(name, email, message){
     return 'A message received from '+name+'\n'+'Email : '+email+'\n'+'Message : '+message;
@@ -16,7 +17,7 @@ function Contact() {
         event.preventDefault();
     
         try {
-          const response = await axios.post('http://localhost:5000/email/send', {
+          const response = await axios.post(backend_endpoint+'/email/send', {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });

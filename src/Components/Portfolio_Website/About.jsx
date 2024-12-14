@@ -2,7 +2,6 @@ import React,{useState,useRef} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGrin } from '@fortawesome/free-solid-svg-icons';
 import './About.css';
-import './App.css'; // Custom styles if needed
 import { useInView } from 'react-intersection-observer';
 
 
