@@ -1,0 +1,29 @@
+.open{
+    width: 30%;
+    float: right;
+    height: 100vh;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+    background-color: black;
+}
+
+.closed{
+    width: 0px;
+    display: none;
+}
+
+.filter-bar{
+    width: 30%;
+    float: right;
+    height: 100vh;
+    z-index: 10;
+    position: absolute;
+    right: 0;
+}
+
+@media screen and (max-width:576px) {
+    .filter-bar{
+        width: 90%;
+    }
+}

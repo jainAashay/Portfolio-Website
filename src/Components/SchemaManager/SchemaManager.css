@@ -1,3 +1,19 @@
+
+.alignment {
+    float: right;
+}
+
+.responsive-container{
+    min-height: 100vh;
+}
+
+.action-item{
+    padding-left: 1rem;
+    cursor: pointer;
+    font-size: 1.2em;
+    
+}
+
 @media screen and (max-width:576px) {
     .responsive-container{
         width: 90% !important;;
@@ -11,17 +27,11 @@
         padding-right: 1.5rem !important;
     
     }
-}
-
-.responsive-container{
-    min-height: 100vh;
-}
-
-.action-item{
-    padding-left: 1rem;
-    cursor: pointer;
-    font-size: 1.2em;
-    
+    .alignment{
+        float:none;
+        padding-top: 10px;
+        justify-content: space-between;
+    }
 }
 
 

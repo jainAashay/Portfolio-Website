@@ -64,7 +64,7 @@ function CreateSchemaModal() {
                 <input type="text" className="form-control" value={inputSchemaName} onChange={(e) => setInputSchemaName(e.target.value)} placeholder="Provide name for your schema" />
               </div>
               <div className="form-group my-2">
-                <label htmlFor="filter" className='my-3 fs-5 text-info fw-bold'>Choose attributes to apply search filter : <span class="badge text-bg-danger">Max 5</span> </label>
+                <label htmlFor="filter" className='my-3 fs-5 text-info fw-bold'>Choose attributes to apply search filter : <span className="badge text-bg-danger">Max 5</span> </label>
                 <div className='input-group'>
                   <input type="text" className="form-control me-2" placeholder="Enter attribute name to used for search" value={inputFilter} onChange={(e) => setInputFilter(e.target.value)}/>
                   <button className="btn btn-primary btn-success fw-bold px-3" onClick={handleAddItem}>
