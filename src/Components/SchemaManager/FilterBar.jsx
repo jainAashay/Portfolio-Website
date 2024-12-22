@@ -1,12 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Filter.css'; // Ensure to include the updated CSS
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { filterParam } from './SchemaDataView';
 
-function FilterBar({ isVisible, onClose, onApply}) {
+function FilterBar({ filters,isVisible, onClose, onApply}) {
 
-    const filters = JSON.parse(localStorage.getItem('filters'));
+    const [fetchedFilters,setFetchedFilters] = useState(filters);
+
+    useEffect(() => {
+        // Fetch or update filters
+        setFetchedFilters(filters);
+    }, []);
 
     const [filterPayload,setFilterPayload] = useState({});
 
@@ -45,28 +50,16 @@ function FilterBar({ isVisible, onClose, onApply}) {
 
     return (
         <div className={`filter-bar text-light ${isVisible ? 'open' : 'closed'}`} id="filterBar">
-            <FontAwesomeIcon
-                icon={faClose}
-                onClick={onClose}
-                ref={closeButtonRef}  // Attach the ref to the FontAwesomeIcon
-                className="fs-5 float-end p-3 text-light"
-                style={{ cursor: 'pointer' }}
+            <FontAwesomeIcon icon={faClose} onClick={onClose} ref={closeButtonRef}  // Attach the ref to the FontAwesomeIcon className="fs-5 float-end p-3 text-light" style={{ cursor: 'pointer' }}
             />
             <div className="filter-content p-4">
                 <div className='text-danger fs-4 text-center fw-bold p-3'>
                     Apply Filters 
                 </div>
-                {filters.map((filter, index) => (
+                {fetchedFilters.map((filter, index) => (
                     <div className="mb-3" key={filter}>
                         <label htmlFor={filter} className="form-label fw-bold" style={{color:'gold'}}>{filter}</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id={filter}
-                            placeholder={filter}
-                            value={filterPayload[filter] || ''} // Controlled input
-                            onChange={handleInputChange}
-                        />
+                        <input type="text" className="form-control" id={filter} placeholder={filter} value={filterPayload[filter] || ''} onChange={handleInputChange} />
                     </div>
                 ))}
             </div>

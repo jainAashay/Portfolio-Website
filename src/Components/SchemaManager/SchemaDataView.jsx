@@ -19,8 +19,6 @@ function SchemaDataView() {
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    console.log("Hello : " + schema);
-
     const handleFilterApply = (newFilterPayload) => {
         setFilterParams(newFilterPayload); // Update filterParams when filters are applied
     };
@@ -45,7 +43,7 @@ function SchemaDataView() {
                     setData(response.data.data);
                     setKeys(response.data.keys.filter(key => key != '_id'));
                     setTotalPages(Math.ceil(response.data.total_count / 20));
-                    localStorage.setItem('filters', JSON.stringify(response.data.filters));
+                    setFilters(JSON.stringify(response.data.filters));
                     setMessage('');
                 }
                 else {
@@ -73,7 +71,7 @@ function SchemaDataView() {
         <div style={{ backgroundColor: 'skyblue' }}>
 
             <FilterBar filters={filters} isVisible={visible} onClose={() => setVisible(false)} onApply={handleFilterApply} />
-
+                
             <div className="container pt-4 responsive-container" style={{ width: '80%' }}>
                 <div className='py-2 text-center'>
                     <h1 className='fw-bold pb-2 text-danger'>{schema}</h1>
