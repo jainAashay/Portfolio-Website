@@ -43,7 +43,7 @@ function SchemaDataView() {
                     setData(response.data.data);
                     setKeys(response.data.keys.filter(key => key != '_id'));
                     setTotalPages(Math.ceil(response.data.total_count / 20));
-                    setFilters(JSON.stringify(response.data.filters));
+                    setFilters(response.data.filters);
                     setMessage('');
                 }
                 else {

@@ -6,12 +6,6 @@ import { filterParam } from './SchemaDataView';
 
 function FilterBar({ filters,isVisible, onClose, onApply}) {
 
-    const [fetchedFilters,setFetchedFilters] = useState(filters);
-
-    useEffect(() => {
-        // Fetch or update filters
-        setFetchedFilters(filters);
-    }, []);
 
     const [filterPayload,setFilterPayload] = useState({});
 
@@ -50,13 +44,12 @@ function FilterBar({ filters,isVisible, onClose, onApply}) {
 
     return (
         <div className={`filter-bar text-light ${isVisible ? 'open' : 'closed'}`} id="filterBar">
-            <FontAwesomeIcon icon={faClose} onClick={onClose} ref={closeButtonRef}  // Attach the ref to the FontAwesomeIcon className="fs-5 float-end p-3 text-light" style={{ cursor: 'pointer' }}
-            />
+            <FontAwesomeIcon icon={faClose} onClick={onClose} ref={closeButtonRef}   className="fs-5 float-end p-3 text-light" style={{ cursor: 'pointer' }} />
             <div className="filter-content p-4">
                 <div className='text-danger fs-4 text-center fw-bold p-3'>
                     Apply Filters 
                 </div>
-                {fetchedFilters.map((filter, index) => (
+                {filters.map((filter, index) => (
                     <div className="mb-3" key={filter}>
                         <label htmlFor={filter} className="form-label fw-bold" style={{color:'gold'}}>{filter}</label>
                         <input type="text" className="form-control" id={filter} placeholder={filter} value={filterPayload[filter] || ''} onChange={handleInputChange} />
