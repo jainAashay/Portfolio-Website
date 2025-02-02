@@ -34,10 +34,10 @@ function Projects() {
         {
             id:3,
             image: 'DBB',
-            heading: 'Student Information Manager',
+            heading: 'Schema Manager',
             description: 'Developed a full-stack web application for managing student information with login authentication, enabling users to perform CRUD operations on a Student Information Table. Enhanced the application by adding features for easy data import and preview from CSV files, and implemented advanced filtering options on multiple columns to offer tailored views of student data.',
-            projectCode: 'https://aashay26.pythonanywhere.com/records',
-            projectLink: 'https://aashay26.pythonanywhere.com/records'
+            projectCode: 'https://aashay-jain.netlify.app/schema-manager',
+            projectLink: 'https://aashay-jain.netlify.app/schema-manager'
         },
         {
             id:4,
