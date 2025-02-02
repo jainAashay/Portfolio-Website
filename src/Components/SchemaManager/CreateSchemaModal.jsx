@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import backend_endpoint from '../Constants';
 import Cookies from 'js-cookie';
+import { Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 function CreateSchemaModal() {
   const [filterItems, setFilterItems] = useState([]); // State to hold the list of items
@@ -36,15 +38,15 @@ function CreateSchemaModal() {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         }
       });
-      if(response.status==200){
-        document.querySelector('.btn-close').click();
-      }
-      else{
-        alert(response.data.message);
-      }
+        toast.success('Successfuly created Schema ' + request.name);
     }
     catch(error){
-       console.log(error);
+      toast.error("An error occured ! Please try again");
+      console.log(error);
+    }
+    finally{
+      document.getElementById('createSchemaCloseBtn').click();
+      window.location.reload();
     }
 
   }
@@ -55,7 +57,7 @@ function CreateSchemaModal() {
         <div className="modal-content bg-dark">
           <div className="modal-header">
             <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel" style={{ color: 'coral' }}>Create New Schema</h1>
-            <button type="button" className="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" id='createSchemaCloseBtn' className="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           
             <div className="modal-body text-light">

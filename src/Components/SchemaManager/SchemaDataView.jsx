@@ -4,8 +4,13 @@ import Cookies from 'js-cookie';
 import backend_endpoint from '../Constants';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faFilter, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import FilterBar from './FilterBar';
+import { toast, ToastContainer } from 'react-toastify';
+import SchemaDataUpdate from './SchemaDataUpdate';
+import { Pagination } from '@mui/material';
+import Model from '../Portfolio_Website/Model_Login';
+import {useLoginModal} from '../Login';
 
 function SchemaDataView() {
     const { schema } = useParams();
@@ -18,43 +23,75 @@ function SchemaDataView() {
     const [pageNumber, setPageNumber] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false); // State for loading spinner
+    const [dataToUpdate, setDataToUpdate] = useState(null);
+
+    const handleDelete = async (id) => {
+        try {
+            const loginToken = Cookies.get('login_token');
+            const response = await axios.delete(backend_endpoint + '/schema/' + schema + '/data/delete/' + id, {
+                headers: {
+                    Authorization: `Bearer ${loginToken}` // Set the authorization header
+                }
+            });
+            if (response.status == 200) {
+                toast.success("Data Deleted Successfuly");
+                fetchSchemaData();
+            }
+            else if (response.status == 401) {
+                toast.error("Unauthored ! Please login and try again !");
+            }
+            else {
+                toast.error("An error occured.Pls try again");
+            }
+        }
+        catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
+    }
 
     const handleFilterApply = (newFilterPayload) => {
         setFilterParams(newFilterPayload); // Update filterParams when filters are applied
     };
 
-    useEffect(() => {
-        async function fetchSchemaData() {
-            setLoading(true); // Show spinner
-            setMessage('');   // Clear previous messages
-            try {
-                const loginToken = Cookies.get('login_token');
-                const response = await axios.post(backend_endpoint + '/schema/' + schema + '/view',
-                    {
-                        filter_params: filterParams, // Add your filters
-                        query_params: { page_number: pageNumber } // Add your query params
+    async function fetchSchemaData() {
+        setLoading(true); // Show spinner
+        setMessage('');   // Clear previous messages
+        try {
+            const loginToken = Cookies.get('login_token');
+            const response = await axios.post(backend_endpoint + '/schema/' + schema + '/view',
+                {
+                    filter_params: filterParams, // Add your filters
+                    query_params: { page_number: pageNumber } // Add your query params
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${loginToken}` // Set the authorization header
                     },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${loginToken}` // Set the authorization header
-                        }
-                    });
+                     validateStatus: (status) => status < 500
+                });
 
-                if (response.status === 200) {
-                    setData(response.data.data);
-                    setKeys(response.data.keys.filter(key => key !== '_id'));
-                    setTotalPages(Math.ceil(response.data.total_count / 20));
-                    setFilters(response.data.filters);
-                } else {
-                    setMessage(response.data.message || 'Failed to fetch data.');
-                }
-            } catch (error) {
-                setMessage('An error occurred while fetching data. Please try again.');
-                console.error(error);
-            } finally {
-                setLoading(false); // Hide spinner
+            if (response.status === 200) {
+                setData(response.data.data);
+                setKeys(response.data.keys.filter(key => key !== '_id'));
+                setTotalPages(Math.ceil(response.data.total_count / 20));
+                setFilters(response.data.filters);
+            } else {
+                setMessage('Unauthored ! Please login and try again !');
             }
+        } catch (error) {
+            toast.error('An error occurred while fetching data. Please try again.');
+            setMessage('An error occurred while fetching data. Please try again.')
+            console.error(error);
+        } finally {
+            setLoading(false); // Hide spinner
         }
+    }
+
+    useLoginModal();
+
+    useEffect(() => {
+
         fetchSchemaData();
     }, [filterParams, pageNumber]);
 
@@ -62,8 +99,50 @@ function SchemaDataView() {
         setVisible(!visible);
     }
 
+    const handleDownload = async () => {
+        try {
+            const loginToken = Cookies.get('login_token');
+            const response = await axios.get(backend_endpoint + '/schema/' + schema + '/data/download', {
+                headers: {
+                    Authorization: `Bearer ${loginToken}` // Set the authorization header
+                },
+                responseType: 'blob'
+            });
+
+
+
+            if (response.status == 200) {
+                const fileBlob = response.data;
+                const downloadUrl = window.URL.createObjectURL(fileBlob);
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.setAttribute('download', 'data-file.xlsx'); // Set the desired file name here
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(downloadUrl);
+                toast.success("Data Downloaded Successfuly");
+            }
+            else if (response.status == 401) {
+                toast.error("Unauthored ! Please login and try again !");
+            }
+            else {
+                toast.error("An error occured.Pls try again later");
+            }
+        }
+        catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
+
+    }
+
     return (
-        <div style={{ backgroundColor: 'skyblue' }}>
+        <div style={{ backgroundColor: 'skyblue', height: 'fitContent' }}>
+            <ToastContainer />
+            <Model />
+
+            <SchemaDataUpdate data={dataToUpdate} />
             <FilterBar filters={filters} isVisible={visible} onClose={() => setVisible(false)} onApply={handleFilterApply} />
 
             <div className="container pt-4 responsive-container" style={{ width: '80%' }}>
@@ -83,55 +162,55 @@ function SchemaDataView() {
                     </div>
                 ) : (
                     <>
-                        <div className='pb-2'>
-                            <FontAwesomeIcon icon={faFilter} style={{ fontSize: '1.5rem', cursor: 'pointer' }} className='float-end text-danger' onClick={toggleSidebarVisibility} />
+                        <div className=''>
+                            <div className="d-flex justify-content-end align-items-center">
+                                <button className='btn btn-sm btn-outline-dark fw-bold' style={{ marginRight: '1rem' }} onClick={handleDownload}>Download</button>
+                                <FontAwesomeIcon
+                                    icon={faFilter}
+                                    style={{ fontSize: '1.5rem', cursor: 'pointer' }}
+                                    className='text-danger'
+                                    onClick={toggleSidebarVisibility}
+                                />
+                            </div>
                         </div>
-                        <div className='mt-4 pb-4'>
-                            <div className='table-responsive text-light' style={{ maxHeight: '100vh' }}>
+
+                        <div className='pt-2 pb-4'>
+                            <div className='table-responsive' style={{ maxHeight: '100vh', scrollbarWidth: 'none' }}>
                                 <table className='text-center' style={{ width: '100%', minWidth: '400px', margin: '0 auto', tableLayout: 'fixed' }}>
                                     <thead className='position-sticky top-0'>
                                         <tr>
+                                            <th className='fw-bold bg-warning text-dark border' style={{ backgroundColor: 'yellow', width: '6rem' }}>
+                                                Actions
+                                            </th>
                                             {keys.map((item, index) => (
-                                                <th className='fw-bold bg-warning text-dark' key={index} style={{ backgroundColor: 'yellow' }}>
+                                                <th className='fw-bold bg-warning text-dark border' key={index} style={{ backgroundColor: 'yellow' }}>
                                                     {item}
                                                 </th>
                                             ))}
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {data.map((item, index) => (
-                                            <tr key={index}>
+                                            <tr key={index} style={{ backgroundColor: 'bisque' }}>
+                                                <td className='text-center'>
+                                                    <FontAwesomeIcon className='action-item ps-1' icon={faPen} style={{ color: 'blue' }} data-bs-toggle="modal" data-bs-target="#UpdateDataModal" onClick={() => { setDataToUpdate(item) }} />
+
+                                                    <FontAwesomeIcon className='action-item' icon={faTrashAlt} style={{ color: 'red' }} onClick={() => handleDelete(item._id)} />
+                                                </td>
+
                                                 {keys.map((key, idx) => (
-                                                    <td className='bg-dark' key={idx} style={{ backgroundColor: 'bisque' }}>{item[key]}</td>
+                                                    <td key={idx}>{item[key]}</td>
                                                 ))}
+
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div className='pb-4'>
-                            <nav className='float-end'>
-                                <ul className="pagination">
-                                    <li className="page-item">
-                                        <button className="page-link" onClick={() => setPageNumber(pageNumber => Math.max(pageNumber - 1, 1))}>
-                                            Previous
-                                        </button>
-                                    </li>
-                                    {Array.from({ length: Math.min(10, totalPages) }, (_, i) => i + 1).map((page) => (
-                                        <li key={page} className={`page-item ${pageNumber === page ? 'active' : ''}`}>
-                                            <button className="page-link" onClick={() => setPageNumber(page)}>
-                                                {page}
-                                            </button>
-                                        </li>
-                                    ))}
-                                    <li className="page-item">
-                                        <button className="page-link" onClick={() => setPageNumber(prev => Math.min(pageNumber + 1, totalPages))}>
-                                            Next
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div className='d-flex justify-center'>
+                            <Pagination className='mx-auto pb-4' count={totalPages} page={pageNumber} siblingCount={1} boundaryCount={2} color="secondary" onChange={(event, page) => setPageNumber(page)} showFirstButton showLastButton />
                         </div>
                     </>
                 )}

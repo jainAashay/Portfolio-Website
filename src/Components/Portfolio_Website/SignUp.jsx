@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faKey, faEnvelopeOpen, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import backend_endpoint from '../Constants';
 
 function SignUp() {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://backend-apis-vcdm.onrender.com/signup', {
+            const response = await axios.post(backend_endpoint+'/signup', {
                 name: name,
                 password: password,
                 email: username + '@gmail.com'
@@ -58,10 +59,10 @@ function SignUp() {
                         <span className="input-group-text" id="addon-wrapping"><FontAwesomeIcon icon={faUser} style={{ color: 'red' }} /></span>
                         <input type="text" className="form-control" value={name} placeholder="Name" aria-label="Username" aria-describedby="addon-wrapping" onChange={(e) => setName(e.target.value)} required />
                     </div>
-                    <div class="input-group mb-3">
+                    <div className="input-group mb-3">
                         <span className="input-group-text" id="addon-wrapping"><FontAwesomeIcon icon={faEnvelopeOpen} style={{ color: 'red' }} /></span>
-                        <input type="text" class="form-control" placeholder="Email" aria-label="email" onChange={(e) => setUsername(e.target.value)} />
-                        <span class="input-group-text" id="basic-addon2">@gmail.com</span>
+                        <input type="text" className="form-control" placeholder="Email" aria-label="email" onChange={(e) => setUsername(e.target.value)} />
+                        <span className="input-group-text" id="basic-addon2">@gmail.com</span>
                     </div>
                     <div className="input-group flex-nowrap mx-auto my-4" >
                         <span className="input-group-text" id="addon-wrapping"><FontAwesomeIcon icon={faKey} style={{ color: 'red' }} /></span>

@@ -6,6 +6,7 @@ import axios from 'axios';
 import backend_endpoint from '../Constants';
 import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function InsertDataModel({schema}) {
 
@@ -51,7 +52,7 @@ function InsertDataModel({schema}) {
                     closeButtonRef.current.click();
                 }
 
-                alert("Data ingested successfully");
+                toast.success("Data ingested successfully");
             }
             else {
                 setMessage(response.data.message);
@@ -75,7 +76,7 @@ function InsertDataModel({schema}) {
                         <div className='fst-italic fw-bold pb-3'>Upload data through .csv/.xlsx file</div>
                         <div className="input-group mb-3">
                             <input type="file" className="form-control" id="inputGroupFile02" onChange={handleFileChange} />
-                            <label className="input-group-text" for="inputGroupFile02">Upload</label>
+                            <label className="input-group-text" htmlFor="inputGroupFile02">Upload</label>
                         </div>
                         <div className='text-danger'>{message}</div>
                     </div>

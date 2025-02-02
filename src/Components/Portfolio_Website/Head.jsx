@@ -33,7 +33,7 @@ export function Head() {
       window.location.href = '/'; 
     } 
     else {
-      const modalElement = document.getElementById('exampleModal');
+      const modalElement = document.getElementById('loginSignUpModal');
       if (modalElement) {
         const modal = new window.bootstrap.Modal(modalElement);
         modal.show();

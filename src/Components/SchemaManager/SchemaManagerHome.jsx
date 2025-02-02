@@ -3,13 +3,15 @@ import { Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPlus, faSquarePlus, faTrashAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
 import './SchemaManager.css'
-import { faEdit } from '@fortawesome/free-solid-svg-icons/faEdit';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CreateSchemaModal from './CreateSchemaModal';
 import backend_endpoint from '../Constants';
 import InsertDataModel from './InsertDataModel';
 import InsertDataFromFormModal from './InsertDataFromFormModal';
+import Model from '../Portfolio_Website/Model_Login';
+import { useLoginModal } from '../Login';
+import { ToastContainer } from 'react-toastify';
 
 function SchemaManagerHome() {
   const [schemas, setSchemas] = useState([]);
@@ -17,22 +19,37 @@ function SchemaManagerHome() {
   const [filteredSchemas, setFilteredSchemas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState('');
   const [pointedSchema,setPointedSchema] = useState('');
+
+  useLoginModal();
 
   const fetchSchemas = async () => {
     try {
-      const loginToken = Cookies.get('login_token');
+      const loginToken = Cookies.get('login_token') || ''; 
+      console.log(loginToken);
       const response = await axios.get(backend_endpoint + '/schemas/view', {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
-        }
+        },
+        validateStatus: (status) => status < 500
       });
-      console.log(response.data.schemas);
-      const initialSchema = response.data.schemas.map(schema => schema.name);
-      setSchemas(initialSchema);
-      setFilteredSchemas(initialSchema);
+      console.log(response);
+      if(response.status == 200){
+        console.log(response.data.schemas);
+        const initialSchema = response.data.schemas.map(schema => schema.name);
+        setSchemas(initialSchema);
+        setFilteredSchemas(initialSchema);
+      }
+      else{
+        setError(true);
+        setErrorMessage("Unauthored ! Please login and try again !");
+      }
+        
+      
     } catch (error) {
       setError(true);
+      setErrorMessage("An error occured while fetching schemas. Please try again later");
       console.error('Error fetching schemas:', error);
     }
     finally {
@@ -84,9 +101,11 @@ function SchemaManagerHome() {
 
   return (
     <div style={{ backgroundColor: 'skyblue' }}>
+      <Model />
       <CreateSchemaModal />
       <InsertDataModel schema={pointedSchema} />
       <InsertDataFromFormModal schema={pointedSchema} />
+      <ToastContainer/>
       <div className="container pt-4 responsive-container" style={{ width: '60%' }}>
         <div className='py-3 text-center'>
           <h1 className='fw-bold pb-2 text-danger'>Schema Manager</h1>
@@ -115,7 +134,7 @@ function SchemaManagerHome() {
           </div>
         ) : error ? (
           <div className="row text-center">
-            <div className='col-12 p-3 fw-bold fst-italic'>Error loading your Schemas !! Please reload the page</div>
+            <div className='col-12 p-3 fw-bold fst-italic'>{errorMessage}</div>
           </div>
         ) : (<div></div>)}
 
@@ -126,7 +145,6 @@ function SchemaManagerHome() {
               <div className="col-sm-12 col-md-4 col-lg-4" >
                 <div className='alignment align-items-center'>
                   <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faTrashAlt} style={{ color: 'red' }} onClick={() => handleDelete(schema)}/>
-                  <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faEdit} style={{ color: 'blue' }} onClick={() => handleDelete(schema)}/>
                   <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faUpload} style={{ color: 'black' }} data-bs-toggle="modal" data-bs-target="#insertDataModal" onClick={() => {setPointedSchema(schema)}}/> 
                    <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faSquarePlus} style={{ color: 'darkmagenta' }} data-bs-toggle="modal" data-bs-target="#insertFormDataModal" onClick={() => {setPointedSchema(schema)}}/> 
                   <a href={`/schema-manager/schema/${schema}/view`}  target="_blank"  rel="noopener noreferrer"  className='pe-1' >

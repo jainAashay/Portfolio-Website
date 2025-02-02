@@ -5,6 +5,7 @@ import backend_endpoint from '../Constants';
 import Cookies from 'js-cookie';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast } from 'react-toastify';
 
 function InsertDataFromFormModal({ schema }) {
 
@@ -70,7 +71,7 @@ function InsertDataFromFormModal({ schema }) {
                 if (response.status == 200) {
                     setMessage('');
     
-                    alert("Data ingested successfully");
+                    toast.success("Data ingested successfully");
                 }
                 else {
                     setMessage(response.data.message);
@@ -80,7 +81,7 @@ function InsertDataFromFormModal({ schema }) {
             }
         }
         else{
-            alert("Input Data cannot be null/empty.")
+            toast.error("Input Data cannot be null/empty.")
         }
     };
 
