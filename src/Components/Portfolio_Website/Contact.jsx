@@ -4,6 +4,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import './Contact.css'
 import axios from 'axios';
 import backend_endpoint from '../Constants';
+import { toast } from 'react-toastify';
 
 function createMessage(name, email, message){
     return 'A message received from '+name+'\n'+'Email : '+email+'\n'+'Message : '+message;
@@ -21,8 +22,9 @@ function Contact() {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });
-          alert(response.data.message);
+          toast.success(response.data.message);
         } catch (err) {
+          toast.error("An error occured. Please try again!")
           console.error('Error sending email:', err);
         }
       };
