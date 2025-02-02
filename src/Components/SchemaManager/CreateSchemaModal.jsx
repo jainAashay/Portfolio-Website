@@ -38,19 +38,16 @@ function CreateSchemaModal() {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         },
         validateStatus: (status) => {
-          if(status == 200){
-            toast.success('Successfuly created Schema ' + request.name);
-            return true;
-          }
-          else if(status == 400){
-            toast.error('Schema already exists with name ' + request.name);
-            return true;
-          }
-          else{
-            return false;
-          }
+          return true
         }
       });
+      if(response.status == 200){
+        window.location.reload();
+        toast.success("Schema created successfully !");
+      }
+      else if(response.status == 409){
+        toast.error("Schema : " +request['name'] + " already exists !")
+      }
         
     }
     catch(error){
@@ -59,7 +56,6 @@ function CreateSchemaModal() {
     }
     finally{
       document.getElementById('createSchemaCloseBtn').click();
-      window.location.reload();
     }
 
   }

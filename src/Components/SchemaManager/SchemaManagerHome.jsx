@@ -11,7 +11,7 @@ import InsertDataModel from './InsertDataModel';
 import InsertDataFromFormModal from './InsertDataFromFormModal';
 import Model from '../Portfolio_Website/Model_Login';
 import { useLoginModal } from '../Login';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 function SchemaManagerHome() {
   const [schemas, setSchemas] = useState([]);
@@ -86,14 +86,18 @@ function SchemaManagerHome() {
     const response = await axios.delete(backend_endpoint + '/schema/' + schema + '/delete', {
       headers: {
         Authorization: `Bearer ${loginToken}` // Set the authorization header
+      },
+      validateStatus: (status) => {
+        return true;
       }
     });
     if (response.status == 200) {
       fetchSchemas();
+      toast.success("Schema : " + schema +" deleted successfully !")
       console.log('Delete schema with name :', schema);
     }
     else {
-      alert(response.data.message)
+      toast.error(response.data.message)
       console.log(response.data);
     }
   };
