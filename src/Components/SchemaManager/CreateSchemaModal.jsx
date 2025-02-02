@@ -36,9 +36,17 @@ function CreateSchemaModal() {
       const response = await axios.post(backend_endpoint+'/schema/create',request, {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
+        },
+        validateStatus: (status) => {
+          if(status == 200){
+            toast.success('Successfuly created Schema ' + request.name);
+          }
+          else if(status == 400){
+            toast.error('Schema already exists with name ' + request.name);
+          }
         }
       });
-        toast.success('Successfuly created Schema ' + request.name);
+        
     }
     catch(error){
       toast.error("An error occured ! Please try again");
