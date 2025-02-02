@@ -40,9 +40,11 @@ function CreateSchemaModal() {
         validateStatus: (status) => {
           if(status == 200){
             toast.success('Successfuly created Schema ' + request.name);
+            return true
           }
           else if(status == 400){
             toast.error('Schema already exists with name ' + request.name);
+            return true
           }
         }
       });
