@@ -22,7 +22,7 @@ function Contact() {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });
-          toast.success(response.data.message);
+          toast.success("Hey, I have got your message. Will get back to you ASAP !!");
         } catch (err) {
           toast.error("An error occured. Please try again!")
           console.error('Error sending email:', err);

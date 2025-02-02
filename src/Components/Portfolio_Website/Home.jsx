@@ -9,10 +9,12 @@ import Projects from './Projects';
 import Contact from './Contact.jsx';
 import Head from './Head';
 import Footer from './Footer';
+import { ToastContainer } from 'react-toastify';
 
 function Home() {
     return (
         <>
+        <ToastContainer/>
         <Head/>
         <Front id="home"/>
         <About id="about" />
