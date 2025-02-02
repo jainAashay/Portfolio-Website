@@ -39,7 +39,7 @@ function Education() {
   }, [inView, education]);
 
   return (
-    <div className='text-center' style={{ backgroundColor: 'beige' }}>
+    <div id='education' className='text-center' style={{ backgroundColor: 'beige' }}>
       <div className='fw-bold fs-1 pt-4 text-success'>
         <FontAwesomeIcon icon={faGraduationCap} className='text-dark' /> Education
       </div>

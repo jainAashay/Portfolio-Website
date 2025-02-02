@@ -28,7 +28,7 @@ function Contact() {
       };
 
     return (
-        <div style={{backgroundColor:'antiquewhite'}}>
+        <div id='contact' style={{backgroundColor:'antiquewhite'}}>
             <div className='text-center fw-bold fs-1 py-4'><FontAwesomeIcon icon={faComment} style={{color:'red'}} /> 
             &nbsp;Get In Touch
             </div>

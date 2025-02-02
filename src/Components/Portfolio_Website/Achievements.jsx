@@ -74,7 +74,7 @@ function Achievements() {
   });
 
   return (
-    <div className='pb-4' style={{ backgroundColor: 'orchid' }} >
+    <div id='achievements' className='pb-4' style={{ backgroundColor: 'orchid' }} >
       <div className="text-center fs-1 py-4 fw-bold" style={{ color: 'black' }}>
         <FontAwesomeIcon icon={faTrophy} />&nbsp;Achievements
       </div>

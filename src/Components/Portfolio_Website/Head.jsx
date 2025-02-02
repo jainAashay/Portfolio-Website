@@ -41,7 +41,31 @@ export function Head() {
     }
   };
 
-  const items = ["Home", "About", "Experience", "Achievements", "Skills", "Projects", "Contact"];
+  const items = [
+    {
+      name: "Home",
+      id: "home"
+    },
+    {
+      name: "About",
+      id: "about"
+    },
+    {
+      name: "Experience",
+      id: "experience"
+    },
+    {
+      name: "Achievements",
+      id: "achievements"
+    },
+    {
+      name: "Projects",
+      id: "projects"
+    },
+    {
+      name: "Contact",
+      id: "contact"
+    }]
 
   return (
     <>
@@ -55,7 +79,7 @@ export function Head() {
             <Nav className="ms-auto fw-bold">
               {items.map((item, index) => (
                 <Nav.Item key={index}>
-                  <NavItems name={item} key={index} />
+                  <NavItems navItem={item} key={index} />
                 </Nav.Item>
               ))}
               <Nav.Item className="px-1 mt-1 align-center text-center">

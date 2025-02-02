@@ -14,7 +14,7 @@ function Skills() {
     groupedSkills.push(skillsWithIds.slice(i, i + 8));
   }
   return (
-    <div className="pb-5" style={{ backgroundColor: 'coral' }}>
+    <div id='skills' className="pb-5" style={{ backgroundColor: 'coral' }}>
 
       <div className='text-center fw-bold fs-1 text-dark py-3'>
         <FontAwesomeIcon icon={faCode} />  Skills

@@ -25,19 +25,20 @@ function Projects() {
         },
         {
             id:2,
+            image: 'DBB',
+            heading: 'Schema Manager',
+            description: 'Developed a full-stack web application  that enables user authentication and multi-schema data management. Users can create multiple schemas for segregated data storage, ensuring efficient organization and isolation.'+
+            'Each schema supports: Upload data via Excel files or enter it through a dynamically generated UI form, View, update, and delete ingested data seamlessly, Download stored data as an Excel sheet for further analysis.',
+            projectCode: 'https://aashay-jain.netlify.app/schema-manager',
+            projectLink: 'https://aashay-jain.netlify.app/schema-manager'
+        },
+        {
+            id:3,
             image: 'nextWord',
             heading: 'Next Words Predictor',
             description: 'Developed a model that allows users to input a sentence and select the number of words they want to predict. The model then generates a continuation of the sentence based on the input, providing contextually relevant and accurate predictions.',
             projectCode: 'https://colab.research.google.com/drive/1mq9Pd1vXcSTw8Jdy7Tk-BZ9Qn08ItMvF?usp=sharing',
             projectLink: 'https://colab.research.google.com/drive/1mq9Pd1vXcSTw8Jdy7Tk-BZ9Qn08ItMvF?usp=sharing'
-        },
-        {
-            id:3,
-            image: 'DBB',
-            heading: 'Schema Manager',
-            description: 'Developed a full-stack web application for managing student information with login authentication, enabling users to perform CRUD operations on a Student Information Table. Enhanced the application by adding features for easy data import and preview from CSV files, and implemented advanced filtering options on multiple columns to offer tailored views of student data.',
-            projectCode: 'https://aashay-jain.netlify.app/schema-manager',
-            projectLink: 'https://aashay-jain.netlify.app/schema-manager'
         },
         {
             id:4,
@@ -64,7 +65,7 @@ function Projects() {
     const [open, setOpen] = useState(false);  // Manage open/close state with React
 
     return (
-        <div style={{ backgroundColor: 'cornflowerblue',overflow:'hidden' }}>
+        <div id='projects' style={{ backgroundColor: 'cornflowerblue',overflow:'hidden' }}>
             <div className='py-3 text-center fw-bold fs-1'>
                 <FontAwesomeIcon icon={faDesktop} className='fs-2' /> Projects
             </div>

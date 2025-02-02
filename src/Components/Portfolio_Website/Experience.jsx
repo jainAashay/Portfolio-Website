@@ -42,7 +42,7 @@ function Experience() {
 
     
   return (
-    <div className='bg-dark py-4'>
+    <div id='experience' className='bg-dark py-4'>
         <div className='fs-1 fw-bold text-center text-white'>
         <FontAwesomeIcon icon={faPenClip} className='text-success' />  Work Experience
         </div>

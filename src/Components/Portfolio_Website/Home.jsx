@@ -14,14 +14,14 @@ function Home() {
     return (
         <>
         <Head/>
-        <Front/>
-        <About/>
-        <Experience/>
-        <Achievements/>
-        <Skills/>
-        <Education/>
-        <Projects/>
-        <Contact/>
+        <Front id="home"/>
+        <About id="about" />
+        <Experience id="experience" />
+        <Achievements id="achievements" />
+        <Skills id="skills" />
+        <Education id="education" />
+        <Projects id="projects" />
+        <Contact id="contact" />
         <Footer/>
         
         </>
