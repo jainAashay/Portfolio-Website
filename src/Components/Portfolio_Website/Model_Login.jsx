@@ -28,7 +28,8 @@ function Model() {
   };
 
   return (
-    <div className="modal fade" id="loginSignUpModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <div className="modal fade" id="loginSignUpModal">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content shadow rounded"  style={{ backgroundColor: 'burlywood' }}>
           <ModelHeader data={modalheader}/> 

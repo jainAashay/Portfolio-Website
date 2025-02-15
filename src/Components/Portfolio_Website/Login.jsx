@@ -5,12 +5,12 @@ import './Model.css'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import backend_endpoint from '../Constants';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Login() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -18,42 +18,34 @@ function Login() {
       const response = await axios.post(backend_endpoint + '/login', {
         username: username,
         password: password
-      });
+      },
+      {
+        validateStatus: (status) => true
+    });
 
       if (response.status === 200) {
-
         Cookies.set('login_token', response.data.access_token,
           {
             expires: 7,
             secure: true
           }
         );
-
-        console.log('Login was successful')
-        console.log(Cookies.get('loggedIn'));
-
-        setMessage('Login was successful!');
+        toast.success(response.data.message);
         document.getElementById('modalClose').click();
         window.location.reload();
+        
+      }
+      else{
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error(error);
-      if (error.response) {
-        // Handle error responses from the server
-        if (error.response.status === 401) {
-          setMessage('Account is not verified or invalid credentials.');
-        } else {
-          setMessage('Login failed. Please try again.');
-        }
-      } else {
-        setMessage('An error occurred. Please try again.');
-      }
+      toast.error('An error occurred. Please try again later !');
     }
   };
 
   return (
     <div>
-      <div className="text-danger text-center">{message}</div>
       <form className='text-center' onSubmit={handleAuth} >
         <div className="input-group flex-nowrap my-4 mx-auto">
           <span className="input-group-text" id="addon-wrapping"><FontAwesomeIcon icon={faUser} style={{ color: 'red' }} /></span>

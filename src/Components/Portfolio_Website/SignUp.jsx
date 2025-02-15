@@ -1,59 +1,42 @@
-import React, { useState } from 'react'
+import React, {useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faKey, faEnvelopeOpen, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faKey, faEnvelopeOpen} from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import backend_endpoint from '../Constants';
+import { toast } from 'react-toastify';
 
 function SignUp() {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-    const [success,setSuccess]= useState(false);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(backend_endpoint+'/signup', {
+            const response = await axios.post(`${backend_endpoint}/signup`, {
                 name: name,
                 password: password,
                 email: username + '@gmail.com'
+            }, {
+                validateStatus: (status) => true
             });
 
             if (response.status === 200) {
-                console.log(response.message);
-                setMessage(response.message);
-                setSuccess(true);
-                
+                document.getElementById('modalClose').click();
+                toast.success(response.data.message);
             }
             else {
-                setMessage('An error occurred. Please try again.');
+                toast.error(response.data.message);
             }
         } catch (error) {
             console.error(error);
-            setMessage('An error occurred. Please try again.');
+            toast.error('An error occurred. Please try again.');
         }
     };
 
     return (
         <>
-        {
-            success && (
-                <div>
-                <div className='text-center'>
-                    <FontAwesomeIcon size='4x' icon={faCircleCheck} className='text-success py-3'/>
-                </div>
-                <div className='fw-bold text-center fs-5'>
-                    A verification link has been sent to your email. Please click on the link to verify your account and login.
-                </div>
-            </div>
-            )
-        }
-
-        {
-            success===false && (
-<div>
-                <div className="text-danger text-center">{message}</div>
+            <div>
                 <form className='text-center' onSubmit={handleSignUp} >
                     <div className="input-group flex-nowrap my-4 mx-auto">
                         <span className="input-group-text" id="addon-wrapping"><FontAwesomeIcon icon={faUser} style={{ color: 'red' }} /></span>
@@ -71,11 +54,6 @@ function SignUp() {
                     <button type='submit' className='btn btn-danger btn-md px-5 fw-bold' style={{ width: '100%' }}>Register</button>
                 </form>
             </div>
-            )
-        }
-            
-
-            
         </>
 
     )

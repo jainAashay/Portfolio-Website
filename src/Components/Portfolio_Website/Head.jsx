@@ -6,6 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Model from './Model_Login';
 import Cookies from 'js-cookie';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { ToastContainer } from 'react-toastify';
 
 export function Head() {
   const [authStatus, setAuthStatus] = useState('Log In');
@@ -69,6 +70,7 @@ export function Head() {
 
   return (
     <>
+    <ToastContainer/>
       <Navbar bg="warning" expand="lg" sticky="top">
         <Container fluid>
           <Navbar.Brand href="#" className="fw-bold fs-4 ps-2">Aashay Jain</Navbar.Brand>
