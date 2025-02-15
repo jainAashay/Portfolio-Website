@@ -61,7 +61,7 @@ function CreateSchemaModal() {
   }
 
   return (
-    <div className="modal fade" id="createSchemaModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade" id="createSchemaModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content bg-dark">
           <div className="modal-header">

@@ -86,7 +86,7 @@ function InsertDataFromFormModal({ schema }) {
     };
 
     return (
-        <div className="modal fade" id="insertFormDataModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="insertFormDataModal" tabIndex="-1" aria-labelledby="exampleModalLabel" >
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ backgroundColor: 'antiquewhite' }}>
                     <div className="modal-header">
