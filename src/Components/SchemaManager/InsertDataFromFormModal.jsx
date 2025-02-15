@@ -64,20 +64,18 @@ function InsertDataFromFormModal({ schema }) {
                     {
                         headers: {
                             Authorization: `Bearer ${loginToken}`
-                        }
+                        },
+                        validateStatus: (status) => true
                     });
     
-                    console.log(response.data);
                 if (response.status == 200) {
-                    setMessage('');
-    
                     toast.success("Data ingested successfully");
                 }
                 else {
-                    setMessage(response.data.message);
+                    toast.error(response.data.message);
                 }
             } catch (error) {
-                setMessage(`Error: ${error.message}`);
+                toast.error("An error occured, please try again later !");
             }
         }
         else{
