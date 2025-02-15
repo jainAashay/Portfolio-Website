@@ -62,7 +62,7 @@ function SchemaDataView() {
             const response = await axios.post(backend_endpoint + '/schema/' + schema + '/view',
                 {
                     filter_params: filterParams, // Add your filters
-                    query_params: { page_number: pageNumber } // Add your query params
+                    query_params: { page_number: pageNumber,page_size: 30 } // Add your query params
                 },
                 {
                     headers: {
@@ -74,7 +74,7 @@ function SchemaDataView() {
             if (response.status === 200) {
                 setData(response.data.data);
                 setKeys(response.data.keys.filter(key => key !== '_id'));
-                setTotalPages(Math.ceil(response.data.total_count / 20));
+                setTotalPages(Math.ceil(response.data.total_count / 30));
                 setFilters(response.data.filters);
             } else {
                 setMessage('Unauthored ! Please login and try again !');
