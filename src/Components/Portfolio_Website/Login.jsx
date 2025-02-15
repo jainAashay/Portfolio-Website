@@ -15,7 +15,7 @@ function Login() {
   const handleAuth = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(backend_endpoint + '/login', {
+      const response = await axios.post(backend_endpoint + '/auth/login', {
         username: username,
         password: password
       },

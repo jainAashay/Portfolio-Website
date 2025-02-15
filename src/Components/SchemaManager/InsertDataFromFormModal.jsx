@@ -59,7 +59,7 @@ function InsertDataFromFormModal({ schema }) {
             }
             try {
                 const loginToken = Cookies.get('login_token');
-                const response = await axios.post(backend_endpoint + '/schema/' + schema + '/insert',
+                const response = await axios.post(backend_endpoint + '/schema_manager/schema/' + schema + '/insert',
                     request,
                     {
                         headers: {

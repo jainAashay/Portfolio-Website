@@ -28,7 +28,7 @@ function SchemaManagerHome() {
     try {
       const loginToken = Cookies.get('login_token') || ''; 
       console.log(loginToken);
-      const response = await axios.get(backend_endpoint + '/schemas/view', {
+      const response = await axios.get(backend_endpoint + '/schema_manager/schemas/view', {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         },
@@ -83,7 +83,7 @@ function SchemaManagerHome() {
 
   const handleDelete = async (schema) => {
     const loginToken = Cookies.get('login_token');
-    const response = await axios.delete(backend_endpoint + '/schema/' + schema + '/delete', {
+    const response = await axios.delete(backend_endpoint + '/schema_manager/schema/' + schema + '/delete', {
       headers: {
         Authorization: `Bearer ${loginToken}` // Set the authorization header
       },

@@ -35,7 +35,7 @@ function InsertDataModel({schema}) {
 
         try {
             const loginToken = Cookies.get('login_token');
-            const response = await axios.post(backend_endpoint + '/schema/' + schema + '/data/upload',
+            const response = await axios.post(backend_endpoint + '/schema_manager/schema/' + schema + '/data/upload',
                 formData,
                 {
                     headers: {

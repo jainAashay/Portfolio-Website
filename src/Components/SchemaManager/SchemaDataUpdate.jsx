@@ -29,7 +29,7 @@ function SchemaDataUpdate({ data }) {
     try {
       console.log(formData);
       const loginToken = Cookies.get('login_token');
-      const response = await axios.put(backend_endpoint + '/schema/' + schema + '/data/update',formData, {
+      const response = await axios.put(backend_endpoint + '/schema_manager/schema/' + schema + '/data/update',formData, {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         }

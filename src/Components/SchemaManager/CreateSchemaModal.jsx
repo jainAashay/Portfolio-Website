@@ -33,7 +33,7 @@ function CreateSchemaModal() {
 
     try{
       const loginToken=Cookies.get('login_token');
-      const response = await axios.post(backend_endpoint+'/schema/create',request, {
+      const response = await axios.post(backend_endpoint+'/schema_manager/schema/create',request, {
         headers: {
           Authorization: `Bearer ${loginToken}` // Set the authorization header
         },

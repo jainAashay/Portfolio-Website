@@ -18,7 +18,7 @@ function Contact() {
         event.preventDefault();
     
         try {
-          const response = await axios.post(backend_endpoint+'/email/send', {
+          const response = await axios.post(backend_endpoint+'/email_sender/email/send', {
             email: 'jainaashay123@gmail.com',
             message: createMessage(name,email,message)
           });

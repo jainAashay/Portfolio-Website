@@ -28,7 +28,7 @@ function SchemaDataView() {
     const handleDelete = async (id) => {
         try {
             const loginToken = Cookies.get('login_token');
-            const response = await axios.delete(backend_endpoint + '/schema/' + schema + '/data/delete/' + id, {
+            const response = await axios.delete(backend_endpoint + '/schema_manager/schema/' + schema + '/data/delete/' + id, {
                 headers: {
                     Authorization: `Bearer ${loginToken}` // Set the authorization header
                 }
@@ -59,7 +59,7 @@ function SchemaDataView() {
         setMessage('');   // Clear previous messages
         try {
             const loginToken = Cookies.get('login_token');
-            const response = await axios.post(backend_endpoint + '/schema/' + schema + '/view',
+            const response = await axios.post(backend_endpoint + '/schema_manager/schema/' + schema + '/view',
                 {
                     filter_params: filterParams, // Add your filters
                     query_params: { page_number: pageNumber,page_size: 30 } // Add your query params
@@ -102,7 +102,7 @@ function SchemaDataView() {
     const handleDownload = async () => {
         try {
             const loginToken = Cookies.get('login_token');
-            const response = await axios.get(backend_endpoint + '/schema/' + schema + '/data/download', {
+            const response = await axios.get(backend_endpoint + '/schema_manager/schema/' + schema + '/data/download', {
                 headers: {
                     Authorization: `Bearer ${loginToken}` // Set the authorization header
                 },
