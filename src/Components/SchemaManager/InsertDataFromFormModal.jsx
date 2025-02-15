@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
 
 function InsertDataFromFormModal({ schema }) {
-
-    const [message, setMessage] = useState('');
     const [inputList, setInputList] = useState([]);
     const [inputPayload, setInputPayload] = useState({});
     const [inputValue, setInputValue] = useState('');
@@ -108,7 +106,6 @@ function InsertDataFromFormModal({ schema }) {
                             ))
                         }
                         <hr></hr>
-                        <div className='fst-italic fw-bold'>{message}</div>
                         <div className='input-group'>
                             <input type="text" className="form-control me-2" placeholder="Enter key name" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
                             <button className="btn btn-primary btn-success fw-bold px-3" onClick={handleAddKey}>
