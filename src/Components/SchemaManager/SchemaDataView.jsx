@@ -165,12 +165,7 @@ function SchemaDataView() {
                         <div className=''>
                             <div className="d-flex justify-content-end align-items-center">
                                 <button className='btn btn-sm btn-outline-dark fw-bold' style={{ marginRight: '1rem' }} onClick={handleDownload}>Download</button>
-                                <FontAwesomeIcon
-                                    icon={faFilter}
-                                    style={{ fontSize: '1.5rem', cursor: 'pointer' }}
-                                    className='text-danger'
-                                    onClick={toggleSidebarVisibility}
-                                />
+                                <FontAwesomeIcon icon={faFilter} style={{ fontSize: '1.5rem', cursor: 'pointer' }} className='text-danger' onClick={toggleSidebarVisibility}/>
                             </div>
                         </div>
 
@@ -200,7 +195,7 @@ function SchemaDataView() {
                                                 </td>
 
                                                 {keys.map((key, idx) => (
-                                                    <td key={idx}>{item[key]}</td>
+                                                    <td key={idx} className='text-truncate'>{item[key]}</td>
                                                 ))}
 
                                             </tr>
