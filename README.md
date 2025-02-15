@@ -1,3 +1,8 @@
+# 🌐 Personal Portfolio Website
+
+## 📌 Overview
+This is my personal portfolio website showcasing my skills, projects, and experience. It serves as a platform to highlight my work, provide contact information, and share insights about my expertise.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
