@@ -64,7 +64,7 @@ function InsertDataModel({schema}) {
 
 
     return (
-        <div className="modal fade" id="insertDataModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
+        <div className="modal fade" id="insertDataModal">
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content" style={{ backgroundColor: 'antiquewhite' }}>
                     <div className="modal-header">

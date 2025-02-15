@@ -55,7 +55,7 @@ function SchemaDataUpdate({ data }) {
   };
 
   return (
-    <div className="modal fade" id="UpdateDataModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
+    <div className="modal fade" id="UpdateDataModal" >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content" style={{backgroundColor:'bisque'}}>
           <div className="modal-header">
