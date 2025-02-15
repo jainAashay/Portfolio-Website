@@ -61,12 +61,12 @@ function CreateSchemaModal() {
   }
 
   return (
-    <div className="modal fade" id="createSchemaModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
+    <div className="modal fade" id="createSchemaModal">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content bg-dark">
           <div className="modal-header">
             <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel" style={{ color: 'coral' }}>Create New Schema</h1>
-            <button type="button" id='createSchemaCloseBtn' className="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" id='createSchemaCloseBtn' className="btn-close bg-light" data-bs-dismiss="modal"></button>
           </div>
           
             <div className="modal-body text-light">
