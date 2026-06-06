@@ -9,7 +9,7 @@ const EXPERIENCE = [
     accentColor: '#F59E0B',
     headerBg: 'linear-gradient(135deg, #FFF7ED, #FEF3C7)',
     timeline: 'Apr 2026 – Present',
-    position: 'Software Development Engineer 2',
+    position: 'Software Development Engineer-2',
     description: [
       'Owned and delivered a high-impact inventory capability for Flipkart Minutes enabling accurate inter-warehouse transfer and inwarding of multi-part shipments across 1,000+ dark stores; drove end-to-end design, development, testing, and productionisation.',
       'Developed a reusable annotation-driven caching library for Dropwizard applications with configurable method-level caching and observability metrics; adopted across 3 services, cutting boilerplate and improving debuggability.',
@@ -26,7 +26,7 @@ const EXPERIENCE = [
     accentColor: '#4338CA',
     headerBg: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)',
     timeline: 'Jul 2024 – Apr 2026',
-    position: 'Software Development Engineer 1',
+    position: 'Software Development Engineer-1',
     description: [
       'Redesigned and optimised consignment dispatch flow — eliminated core library bottlenecks, minimised external dependencies, and implemented caching, achieving 90% latency reduction.',
       'Independently led end-to-end delivery (LLD to production) of multiple core features for Advanced Shipping Note in B2B operations, enhancing scalability and customer experience.',
