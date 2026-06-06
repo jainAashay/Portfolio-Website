@@ -1,98 +1,77 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import './Achievements.css';
+import { faTrophy, faMedal, faAward, faCode } from '@fortawesome/free-solid-svg-icons';
 import AchievementItem from './AchievementItem';
-import { useInView } from 'react-intersection-observer';
-import { useTransition, animated, useTrail } from '@react-spring/web';
+
+const ACHIEVEMENTS = [
+  {
+    id: 0,
+    icon: faAward,
+    platform: 'Flipkart',
+    title: 'Mission Impossible Award',
+    description: 'Individual recognition for exceptional impact on the Dispatch Optimisation initiative — one of the highest individual honours at Flipkart.',
+    link: 'https://drive.google.com/file/d/1bE-WvtqI2_8aT6IVfiNj4MnHEHk3jOxM/view?usp=drivesdk',
+    linkType: 'certificate',
+  },
+  {
+    id: 1,
+    icon: faMedal,
+    platform: 'Flipkart',
+    title: 'Ace Alliance Award',
+    description: 'Team award for outstanding contribution to FKI on TaaS — recognised for cross-functional collaboration and delivery excellence.',
+    link: 'https://drive.google.com/file/d/1aJIKoKXU04VsDZD73YakUEHtJYQ4Sovx/view?usp=drivesdk',
+    linkType: 'certificate',
+  },
+  {
+    id: 2,
+    icon: faCode,
+    platform: 'LeetCode',
+    title: 'Knight — Max Rating 2061',
+    description: 'Achieved Knight rank on LeetCode with a peak contest rating of 2061, placing among the top competitive programmers globally.',
+    link: 'https://leetcode.com/u/jainaashay123/',
+    linkType: 'profile',
+  },
+  {
+    id: 3,
+    icon: faTrophy,
+    platform: 'Codeforces',
+    title: 'Specialist — Max Rating 1430',
+    description: 'Earned Specialist rank on Codeforces with a peak rating of 1430 through consistent performance in algorithmic contests.',
+    link: 'https://codeforces.com/profile/jainaashay123',
+    linkType: 'profile',
+  },
+  {
+    id: 4,
+    icon: faTrophy,
+    platform: 'CodeChef',
+    title: '4-Star — Max Rating 1892',
+    description: 'Attained 4-star status on CodeChef with a peak rating of 1892, competing in monthly long challenges and cook-offs.',
+    link: 'https://www.codechef.com/users/aj_1000',
+    linkType: 'profile',
+  },
+  {
+    id: 5,
+    icon: faMedal,
+    platform: 'Mercer | Mettl',
+    title: 'CodeSmash 1.0 — Rank 49',
+    description: 'Secured an overall rank of 49 in CodeSmash 1.0 — a national-level competitive programming contest, earning a Certificate of Appreciation.',
+    link: null,   // user to provide link
+    linkType: 'certificate',
+  },
+];
+
 function Achievements() {
-  const achievements = [
-    {
-      id: 0,
-      image: 'Codechef.jpg',
-      heading: '4 star Rating at Codechef',
-      content: [
-        "Achieved Max Rating of 1892 at Codechef"
-      ],
-      profileLink: 'https://www.codechef.com/users/aj_1000'
-    },
-    {
-      id: 1,
-      image: 'leetcode.png',
-      heading: 'Knight at Leetcode',
-      content: [
-        "Achieved Max Rating of 2061 at Leetcode"
-      ],
-      profileLink: 'https://leetcode.com/u/jainaashay123/'
-    },
-    {
-      id: 2,
-      image: 'codeforces.jpg',
-      heading: 'Specialist at Codeforces',
-      content: [
-        "Achieved Max Rating of 1430 at Codeforces"
-      ],
-      profileLink: 'https://leetcode.com/u/jainaashay123/'
-    },
-    {
-      id: 3,
-      image: 'Mettl.jpg',
-      heading: 'Mercer | Mettl CodeSmash 1.0',
-      content: [
-        "Earned a Certificate of Appreciation for achieving an impressive overall rank of 49."
-      ]
-    },
-    {
-      id: 4,
-      image: 'CodechefStarters.jpg',
-      heading: 'Codechef Starters 83',
-      content: [
-        "Attained Global Rank 110 in Codechef Starters 83 Contest."
-      ]
-    },
-    {
-      id: 5,
-      image: 'leetcodeBiweekly.jpg',
-      heading: 'Leetcode Biweekly 101',
-      content: [
-        "Achieved Global Rank 132 in Leetcode Biweekly Contest 101"
-      ]
-    },
-
-  ];
-
-  const [ref, inView] = useInView({
-    triggerOnce: true,      // Trigger the animation only once
-    threshold: 0.1,         // Trigger when 10% of the component is in view
-  });
-
-  const trail = useTrail(achievements.length, {
-    opacity: inView ? 1 : 0,  // Animate opacity based on inView
-    transform: inView ? 'translateY(0px)' : 'translateY(-20px)',
-    config: { duration: 500 },
-    trail: 500,  // Delay between items (500 milliseconds)
-  });
-
   return (
-    <div id='achievements' className='pb-4' style={{ backgroundColor: 'orchid' }} >
-      <div className="text-center fs-1 py-4 fw-bold" style={{ color: 'black' }}>
-        <FontAwesomeIcon icon={faTrophy} />&nbsp;Achievements
+    <section id="achievements" style={{ padding: '4rem 1rem', backgroundColor: '#0F172A' }}>
+      <div className="container">
+        <h2 className="section-title">Achievements</h2>
+        <div className="row">
+          {ACHIEVEMENTS.map((item) => (
+            <AchievementItem data={item} key={item.id} />
+          ))}
+        </div>
       </div>
-
-      <div ref={ref} className="container achievements">
-
-      {trail.map((style, index) => {
-          const achievement = achievements[index];
-          
-          return (
-            <animated.div key={achievement.id} style={style}>
-              <AchievementItem AchievementItem={achievement} />
-            </animated.div>
-          );
-        })}
-      </div>
-    </div>
-  )
+    </section>
+  );
 }
 
-export default Achievements
+export default Achievements;

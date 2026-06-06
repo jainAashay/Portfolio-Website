@@ -1,17 +1,59 @@
-/* Define the keyframes for the left-to-right transition */
-@keyframes slideInFromLeft {
-    0% {
-      transform: translateX(-20%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
+.about-section {
+  padding: 6rem 1rem;
+  background-color: #FFFFFF;
+}
+
+.about-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: flex;
+}
+
+/* Photo column stretches full card height */
+.about-photo-col {
+  display: flex;
+  flex-shrink: 0;
+  width: 33%;
+  min-height: 380px;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  /* CSS rotation fix for sideways phone photo */
+  transform: rotate(90deg) scale(1.35);
+}
+
+.about-info-label {
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.about-info-value {
+  color: var(--color-text);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 767px) {
+  .about-card {
+    flex-direction: column;
   }
-  
-  /* Apply the animation to the image */
- .slide-in {
-    animation: slideInFromLeft 1s ease-out;
+  .about-photo-col {
+    width: 100%;
+    min-height: 260px;
   }
-  
+  .about-photo {
+    transform: rotate(90deg) scale(1.5);
+  }
+}

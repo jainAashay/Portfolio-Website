@@ -1,50 +1,84 @@
-import React from 'react'
-import './Experience.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
-import { useInView } from 'react-intersection-observer';
-import './ExperienceItem.css';
+import React, { useRef, useEffect } from 'react';
+import './Experience.css';
 
-function ExperienceItem(props) {
+function ExperienceItem({ data, index }) {
+  const ref = useRef(null);
+  const accent = data.accentColor || 'var(--color-accent)';
+  const headerBg = data.headerBg || '#F9FAFB';
 
-  const { ref, inView } = useInView({
-    triggerOnce: true, // Run only once when the element comes into view
-    threshold: 0.1, // Percentage of the element that must be visible
-  });
-
-  const transitionClass = props.data.id % 2 == 0 ? 'slide-in-left' : 'slide-in-right';
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <li ref={ref} className={`timeline-item bg-white rounded ml-3 p-4 shadow ${inView ? transitionClass : ''}`}>
-                        <div className="timeline-arrow"></div>
-                        <div className='row'>
-  <div className='col-10 d-flex flex-column'>
-    <h2 className="h5 mb-0" style={{color:'magenta'}}>{props.data.position + ', '+ props.data.company}</h2>
-    <span className="small text-primary fw-bold fst-italic">
-      <i className="fa fa-clock-o mr-1"></i>{props.data.timeline}
-    </span>
-  </div>
-  <div className='col-2'>
-    <img className='mb-0 shadow rounded' src={process.env.PUBLIC_URL + '/images/experience/'+props.data.company+'.jpg'} alt="" style={{width:'3rem',height:'3rem',float:'right'}}/>
-  </div>
-</div>
+    <li
+      className="timeline-item"
+      ref={ref}
+      style={{ transitionDelay: `${(index || 0) * 0.12}s` }}
+    >
+      <div className="timeline-dot" style={{ background: accent, boxShadow: `0 0 0 3px ${accent}33` }} />
+      <div className="experience-card" style={{ borderLeftColor: accent }}>
+        {/* Coloured header band */}
+        <div style={{
+          background: headerBg,
+          margin: '-1.5rem -1.5rem 1.25rem',
+          padding: '1.1rem 1.5rem',
+          borderRadius: '10px 10px 0 0',
+          borderBottom: `2px solid ${accent}33`,
+        }}>
+          <div className="exp-company" style={{ color: accent }}>{data.company}</div>
+          <div className="exp-role">{data.position}</div>
+          <div className="exp-meta" style={{ marginBottom: 0 }}>{data.timeline}</div>
+        </div>
 
-     <div className="text-small mt-2 font-weight-light">
-     {props.data.description.map((item, index) => (
-                    
-                    <div className='pb-2' key={index}>
-                    <FontAwesomeIcon icon={faThumbsUp} className='text-success' /> &nbsp;
-                    <span > {item}</span>  
-                    
-      
-                    </div>
-                    
-                ))}
-      
-      </div>                   
-        
+        {data.description.length > 0 && (
+          <ul className="exp-bullets">
+            {data.description.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ul>
+        )}
+
+        {data.impact && data.impact.length > 0 && (
+          <div className="exp-impact">
+            {data.impact.map(({ value, label, color }) => (
+              <div
+                key={label}
+                className="exp-impact-chip"
+                style={{
+                  borderColor: color,
+                  background: `${color}18`,
+                }}
+              >
+                <span style={{ fontSize: '1.1rem', fontWeight: 800, color, lineHeight: 1 }}>{value}</span>
+                <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', marginTop: '0.15rem' }}>{label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {data.tech && (
+          <div className="exp-tech">
+            {data.tech.map((t) => (
+              <span key={t} className="exp-tech-tag">{t}</span>
+            ))}
+          </div>
+        )}
+      </div>
     </li>
-  )
+  );
 }
 
-export default ExperienceItem
+export default ExperienceItem;

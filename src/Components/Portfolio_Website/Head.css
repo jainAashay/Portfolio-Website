@@ -1,8 +1,132 @@
-.nav-link {
-    transition: transform 0.2s; /* Smooth transition */
+.navbar-custom {
+  background: #F8F7FF !important;
+  border-bottom: 3px solid #6366F1;
+  transition: box-shadow 0.3s ease;
+  padding: 0.85rem 1rem;
+}
+
+.navbar-custom.scrolled {
+  box-shadow: 0 4px 20px rgba(99,102,241,0.15);
+}
+
+.navbar-brand-custom {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #1E1B4B !important;
+  letter-spacing: -0.02em;
+}
+
+.nav-link-custom {
+  color: #1E1B4B !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  cursor: pointer;
+  display: block;
+}
+
+.nav-link-custom:hover {
+  color: #4338CA !important;
+  background-color: #EEF2FF;
+}
+
+.nav-btn-signin {
+  background-color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.45rem 1.2rem;
+  transition: background 0.2s;
+}
+
+.nav-btn-signin:hover {
+  background-color: var(--color-accent-hover) !important;
+  border-color: var(--color-accent-hover) !important;
+}
+
+.nav-btn-signin.signout {
+  background-color: #EF4444 !important;
+  border-color: #EF4444 !important;
+}
+
+.nav-btn-signin.signout:hover {
+  background-color: #DC2626 !important;
+  border-color: #DC2626 !important;
+}
+
+/* ── Mobile drawer (slide in from right) ── */
+@media (max-width: 991px) {
+  .navbar-collapse {
+    display: block !important;
+    position: fixed !important;
+    top: 0;
+    right: -105%;
+    height: 100vh;
+    width: 72%;
+    max-width: 320px;
+    background: #F8F7FF;
+    z-index: 2000;
+    padding: 4.5rem 1.5rem 2rem;
+    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3);
+    transition: right 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow-y: auto;
   }
-  
-  .nav-link:hover {
-    transform: scale(1.1); /* Slightly enlarge the link on hover */
+
+  .navbar-collapse.show {
+    right: 0;
   }
-  
+
+  .nav-link-custom {
+    padding: 0.65rem 0.75rem !important;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    color: #1E1B4B !important;
+  }
+
+  .nav-link-custom:hover {
+    background-color: #EEF2FF;
+    color: #4338CA !important;
+  }
+}
+
+/* ── Backdrop overlay ── */
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1999;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.mobile-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ── Close button inside drawer ── */
+.mobile-close-btn {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #F3F4F6;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: background 0.2s;
+}
+
+.mobile-close-btn:hover {
+  background: #E5E7EB;
+}

@@ -1,91 +1,108 @@
 import React, { useState, useEffect } from 'react';
 import './Head.css';
-import NavItems from './NavItems';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Model from './Model_Login';
 import Cookies from 'js-cookie';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
-import { ToastContainer } from 'react-toastify';
+
+const NAV_ITEMS = [
+  { name: 'Home', id: 'home' },
+  { name: 'Experience', id: 'experience' },
+  { name: 'Achievements', id: 'achievements' },
+  { name: 'Projects', id: 'projects' },
+  { name: 'Contact', id: 'contact' },
+];
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
 
 export function Head() {
   const [authStatus, setAuthStatus] = useState('Log In');
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const checkAuthStatus = async () => {
-      const loginToken = Cookies.get('login_token');
-      const authBtn = document.getElementById('signin');
-
-      if (loginToken) {
-        setAuthStatus('Sign Out');
-        authBtn && (authBtn.style.backgroundColor = 'red');
-      } else {
-        setAuthStatus('Log In');
-        authBtn && (authBtn.style.backgroundColor = 'blue');
-      }
-    };
-    checkAuthStatus();
+    const token = Cookies.get('login_token');
+    setIsSignedIn(!!token);
+    setAuthStatus(token ? 'Sign Out' : 'Log In');
   }, []);
 
-  const handleClick = async () => {
-    const loginToken = Cookies.get('login_token');
-    if (loginToken) {
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Close mobile menu on ESC
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setMobileOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  const handleNavClick = (id) => {
+    scrollToSection(id);
+    setMobileOpen(false);
+  };
+
+  const handleClick = () => {
+    const token = Cookies.get('login_token');
+    if (token) {
       Cookies.remove('login_token');
-      window.location.href = '/'; 
-    } 
-    else {
+      window.location.href = '/';
+    } else {
       const modalElement = document.getElementById('loginSignUpModal');
       if (modalElement) {
         const modal = new window.bootstrap.Modal(modalElement);
         modal.show();
       }
     }
+    setMobileOpen(false);
   };
-
-  const items = [
-    {
-      name: "Home",
-      id: "home"
-    },
-    {
-      name: "About",
-      id: "about"
-    },
-    {
-      name: "Experience",
-      id: "experience"
-    },
-    {
-      name: "Achievements",
-      id: "achievements"
-    },
-    {
-      name: "Projects",
-      id: "projects"
-    },
-    {
-      name: "Contact",
-      id: "contact"
-    }]
 
   return (
     <>
-    <ToastContainer/>
-      <Navbar bg="warning" expand="lg" sticky="top">
-        <Container fluid>
-          <Navbar.Brand href="#" className="fw-bold fs-4 ps-2">Aashay Jain</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarNav" className='bg-dark'>
-            <FontAwesomeIcon icon={faBars} className="text-white" />
-          </Navbar.Toggle>
-          <Navbar.Collapse id="navbarNav" className="fs-5">
-            <Nav className="ms-auto fw-bold">
-              {items.map((item, index) => (
-                <Nav.Item key={index}>
-                  <NavItems navItem={item} key={index} />
+      <Navbar
+        expanded={mobileOpen}
+        className={`navbar-custom ${scrolled ? 'scrolled' : ''}`}
+        expand="lg"
+        sticky="top"
+      >
+        <Container>
+          <Navbar.Brand className="navbar-brand-custom">Aashay Jain</Navbar.Brand>
+          <Navbar.Toggle
+            aria-controls="navbarNav"
+            onClick={() => setMobileOpen((o) => !o)}
+          />
+          <Navbar.Collapse id="navbarNav">
+            {/* Close button — only visible on mobile via CSS */}
+            <span
+              className="mobile-close-btn d-lg-none"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+            >
+              ✕
+            </span>
+            <Nav className="ms-auto align-items-lg-center gap-1">
+              {NAV_ITEMS.map((item) => (
+                <Nav.Item key={item.id}>
+                  <span
+                    className="nav-link-custom"
+                    onClick={() => handleNavClick(item.id)}
+                  >
+                    {item.name}
+                  </span>
                 </Nav.Item>
               ))}
-              <Nav.Item className="px-1 mt-1 align-center text-center">
-                <Button id="signin" onClick={handleClick} className="fw-bold" style={{ width: '100%' }}>
+              <Nav.Item className="ms-lg-2 mt-2 mt-lg-0">
+                <Button
+                  id="signin"
+                  onClick={handleClick}
+                  className={`nav-btn-signin ${isSignedIn ? 'signout' : ''}`}
+                  style={{ width: '100%' }}
+                >
                   {authStatus}
                 </Button>
               </Nav.Item>
@@ -93,6 +110,13 @@ export function Head() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+      {/* Backdrop overlay — closes menu when tapped outside */}
+      <div
+        className={`mobile-overlay ${mobileOpen ? 'active' : ''}`}
+        onClick={() => setMobileOpen(false)}
+      />
+
       <Model />
     </>
   );

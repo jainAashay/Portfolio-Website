@@ -1,12 +1,20 @@
-
-
-@media screen and (max-width : 841px) {
-    .skills{
-         width: 90%!important;
-    }
+@media screen and (max-width: 841px) {
+  .skills {
+    width: 90% !important;
+  }
 }
 
-.skills{
-    width:70%;
-    
+.skills {
+  width: 70%;
+}
+
+.skill-group-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.skill-group-item.skill-group-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
