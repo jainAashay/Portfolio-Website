@@ -1,61 +1,78 @@
-import { useSpring,animated } from '@react-spring/web';
-import React from 'react'
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-function ProjectItem(props) {
-  const [showMore, setShowMore] = useState(true);
-  const descriptionLimit=200;
-  const toggleShowMore = () => {
-    setShowMore(!showMore);
-  };
-
-  const { ref, inView } = useInView({
-    triggerOnce: true, // Trigger the animation only once when the component first comes into view
-  });
-
-  const slideInFromLeft = useSpring({
-    transform: inView ? 'translateX(0%)' : 'translateX(-100%)',
-    opacity: inView ? 1 : 0,
-    config: { tension: 80 } // You can adjust the animation config
-  });
-
-  const slideInFromRight = useSpring({
-    transform: inView ? 'translateX(0%)' : 'translateX(100%)',
-    opacity: inView ? 1 : 0,
-    config: { tension: 80 } // You can adjust the animation config
-  });
-
-  const animationStyle = props.data.id % 3 === 0 
-    ? slideInFromLeft 
-    : (props.data.id % 3 === 2 ? slideInFromRight : {});
-
-
-  const showDescription = (text) => {
-    return showMore ? text.slice(0,descriptionLimit) : text +' ';
-  };
-
+function ProjectItem({ data }) {
   return (
-    
-<animated.div ref={ref} className='col-sm-12 col-4 my-3 shadow rounded px-0' style={{width: '20rem',height:'fit-content',backgroundColor:'bisque',...animationStyle}}>
-    <img src={process.env.PUBLIC_URL + '/images/Projects/'+props.data.image+'.jpg'}  style={{height:'10rem',width:'100%',display:'block'}} className='rounded' alt="..." />
-    <div className='text-center text-dark pb-2 px-2' >
-        <h5 className="pt-2 fw-bold">{props.data.heading}</h5>
-        <p className='text-justify text-dark px-2' style={{textAlign:'justify'}}>{showDescription(props.data.description)}
-        <span onClick={toggleShowMore} className='text-primary fw-bold fst-italic' style={{cursor:'pointer'}}>{showMore ? '...Show More' : 'Show Less...'}</span>
+    <div
+      style={{
+        background: 'var(--color-surface)',
+        borderRadius: 'var(--radius-card)',
+        boxShadow: 'var(--shadow-card)',
+        border: '1px solid rgba(99,102,241,0.25)',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        transition: 'box-shadow 0.25s, transform 0.25s',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)';
+        e.currentTarget.style.transform = 'translateY(-3px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-card)';
+        e.currentTarget.style.transform = 'translateY(0)';
+      }}
+    >
+      {data.image && (
+        <img
+          src={process.env.PUBLIC_URL + `/images/Projects/${data.image}.jpg`}
+          alt={data.heading}
+          style={{ width: '100%', height: 180, objectFit: 'cover' }}
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+        />
+      )}
+      <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <h5 style={{ fontWeight: 700, color: 'var(--color-text)', marginBottom: '0.5rem', fontSize: '1rem' }}>
+          {data.heading}
+        </h5>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', lineHeight: 1.7, flex: 1, marginBottom: '1rem' }}>
+          {data.description}
         </p>
-        
-        
+        {data.tags && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '1rem' }}>
+            {data.tags.map((t) => (
+              <span key={t} className="skill-tag" style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>{t}</span>
+            ))}
+          </div>
+        )}
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          {data.projectCode && (
+            <a
+              href={data.projectCode}
+              target="_blank"
+              rel="noreferrer"
+              style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+            >
+              <FontAwesomeIcon icon={faGithub} /> Code
+            </a>
+          )}
+          {data.projectLink && data.projectLink !== data.projectCode && (
+            <a
+              href={data.projectLink}
+              target="_blank"
+              rel="noreferrer"
+              style={{ fontSize: '0.82rem', color: 'var(--color-accent)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem' }}
+            >
+              <FontAwesomeIcon icon={faExternalLinkAlt} /> Live
+            </a>
+          )}
+        </div>
+      </div>
     </div>
-    <div>
-       <a href={props.data.projectCode} target='_blank' rel="noreferrer" className='btn btn-primary btn-sm float-start m-2'>Project Code</a>
-       <a href={props.data.projectLink} target='_blank' rel="noreferrer" className='btn btn-primary btn-sm float-end m-2'>Live Project</a>
-    </div>
-    
-</animated.div>
-
-    
-  )
+  );
 }
 
-export default ProjectItem
+export default ProjectItem;

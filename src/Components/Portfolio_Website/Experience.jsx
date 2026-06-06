@@ -1,67 +1,90 @@
-import React from 'react'
-import './Experience.css'
-import ExperienceItem from './ExperienceItem'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenClip } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import './Experience.css';
+import ExperienceItem from './ExperienceItem';
+
+const EXPERIENCE = [
+  {
+    id: 0,
+    company: 'Flipkart',
+    accentColor: '#F59E0B',
+    headerBg: 'linear-gradient(135deg, #FFF7ED, #FEF3C7)',
+    timeline: 'Apr 2026 – Present',
+    position: 'Software Development Engineer 2',
+    description: [
+      'Owned and delivered a high-impact inventory capability for Flipkart Minutes enabling accurate inter-warehouse transfer and inwarding of multi-part shipments across 1,000+ dark stores; drove end-to-end design, development, testing, and productionisation.',
+      'Developed a reusable annotation-driven caching library for Dropwizard applications with configurable method-level caching and observability metrics; adopted across 3 services, cutting boilerplate and improving debuggability.',
+    ],
+    tech: ['Java', 'AOP', 'Dropwizard', 'System Design', 'Guice','Apache Pulsar'],
+    impact: [
+      { value: '1,000+', label: 'Dark Stores supporting MPS inwarding', color: '#7C3AED' },
+      { value: '3 Services', label: 'Adopted Caching Library', color: '#10B981' },
+    ],
+  },
+  {
+    id: 1,
+    company: 'Flipkart',
+    accentColor: '#4338CA',
+    headerBg: 'linear-gradient(135deg, #EEF2FF, #E0E7FF)',
+    timeline: 'Jul 2024 – Apr 2026',
+    position: 'Software Development Engineer 1',
+    description: [
+      'Redesigned and optimised consignment dispatch flow — eliminated core library bottlenecks, minimised external dependencies, and implemented caching, achieving 90% latency reduction.',
+      'Independently led end-to-end delivery (LLD to production) of multiple core features for Advanced Shipping Note in B2B operations, enhancing scalability and customer experience.',
+      'Implemented real-time KStream pipelines consuming CDC events, enriching data, and publishing to Elasticsearch as a query-optimised secondary store leveraging the CQRS pattern.',
+      'Performed load testing on high-traffic APIs; applied bulk DB operations, cutting latency by 40% and boosting throughput under peak load.',
+    ],
+    tech: ['Java', 'Microservices', 'Elasticsearch', 'Apache Kafka', 'Dropwizard'],
+    impact: [
+      { value: '90%', label: 'Reduction in Dispatch Latency', color: '#4338CA' },
+      { value: '40%', label: 'Faster API response Under Peak Load', color: '#0EA5E9' },
+    ],
+  },
+  {
+    id: 2,
+    company: 'Flipkart',
+    accentColor: '#0EA5E9',
+    headerBg: 'linear-gradient(135deg, #F0F9FF, #DBEAFE)',
+    timeline: 'Jan 2024 – Jun 2024',
+    position: 'Software Development Engineer Intern',
+    description: [
+      'Implemented rate limiter for KStream application — per-stream consumption limits with configurable wait/drop strategies to optimise resource usage and simplify high-load stream onboarding.',
+      'Enriched order-path details in the IWIT flow, enabling Just-In-Time transfer of Flipkart Minutes consignments.',
+    ],
+    tech: ['Java', 'Apache Kafka', 'Dropwizard', 'Kubernetes', 'Docker', 'Python'],
+    impact: [],
+  },
+  {
+    id: 3,
+    company: 'Deutsche Bank',
+    accentColor: '#10B981',
+    headerBg: 'linear-gradient(135deg, #F0FDF4, #DCFCE7)',
+    timeline: 'May 2023 – Jul 2023',
+    position: 'Software Development Engineer Intern',
+    description: [
+      'Developed an application to track, control, and optimise cloud resource utilisation, managing lifecycle for potential cost savings; maintained Sonar coding standards and high test coverage.',
+    ],
+    tech: ['Java', 'Spring Boot', 'REST APIs', 'Agile'],
+    impact: [],
+  },
+];
+
 function Experience() {
-    const experience=[
-        {
-            id:0,
-            company: "Deutsche Bank",
-            timeline : "15 May, 2023 - 7 July, 2023",
-            position: 'Summer Intern',
-            description: ["Created an Infrastructure Inventory Management System to track, control, optimize usage of resources and lifecycle management of resources with a potential of future cost savings.",
-                "Created REST APIs for multiple operations including CRUD.",
-                " Implemented the code with Sonar Coding standards and wrote Unit Tests with a high coverage."
-            ]
-        },
-        {
-            id:1,
-            company: "Flipkart",
-            timeline : "18 January, 2024 - 28 June, 2024",
-            position : 'SDE-Intern',
-            description: [
-                "Contributed to the rapid development of applications by performing diverse tasks, including modifying multiple APIs to incorporate additional attributes.Implemented Hystrix Commands for optimised API data retrieval with fault tolerance. Crafted a nested, multi-layered trace payload of purchase orders using data from a trace API to manage the full purchase-order flow effectively.",
-                "Developed a rate-limiter for Stream Processing Application, with customized rate limits for individual streams. Implemented configurable options to either wait or drop messages when rate-limits are exceeded, enhancing resource management and streamlining onboarding of new high-load streams without further scaling.",
-                "Developed Python scripts to create metrics for fetching message production-rate across Kafka topics, and created a Grafana Dashboard for real-time monitoring and analysis.",
-                "Facilitated migration of Azkaban Jobs between clusters, effectively troubleshooting and enhancing performance across numerous tasks"
-            ]
-        },
-        {
-            id:2,
-            company: "Flipkart",
-            timeline : "18 June, 2024 - Present",
-            position : 'SDE-1',
-            description: [
-                
-            ]
-        }
-
-
-    ];
-
-    
   return (
-    <div id='experience' className='bg-dark py-4'>
-        <div className='fs-1 fw-bold text-center text-white'>
-        <FontAwesomeIcon icon={faPenClip} className='text-success' />  Work Experience
+    <section id="experience" className="experience-section">
+      <div className="container">
+        <h2 className="section-title">Work Experience</h2>
+        <div className="row">
+          <div className="col-lg-8 mx-auto">
+            <ul className="timeline">
+              {EXPERIENCE.map((item, idx) => (
+                <ExperienceItem data={item} key={item.id} index={idx} />
+              ))}
+            </ul>
+          </div>
         </div>
-<div className="row g-0 pt-2">
-            <div className="col-lg-7 mx-auto">
-                  
-                <ul className="timeline">
-                {experience.map((item, index) => (
-                    <ExperienceItem data={item} key={index} />
-                ))}
-
-                    
-                </ul>
-
-            </div>
-        </div>
-    </div>
-    
-  )
+      </div>
+    </section>
+  );
 }
 
-export default Experience
+export default Experience;

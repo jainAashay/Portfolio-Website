@@ -1,0 +1,33 @@
+.edu-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: 0 4px 24px rgba(79, 70, 229, 0.14);
+  overflow: hidden;
+  display: flex;
+  min-height: 140px;
+  border-top: 4px solid #7C3AED;
+}
+
+.edu-logo {
+  width: 120px;
+  flex-shrink: 0;
+  background: #EDE9FE;
+  border-right: 1px solid #DDD6FE;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 575px) {
+  .edu-card {
+    flex-direction: column;
+  }
+
+  .edu-logo {
+    width: 100%;
+    height: 160px;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+}

@@ -1,48 +1,118 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import './Skills.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
-import SkillsItem from './SkillsItem';
-function Skills() {
 
-  const skills = ['HTML', 'CSS', 'Javascript', 'ReactJs', 'Bootstrap', 'MongoDB', 'MySQL', 'C++', 'Java', 'Python', 'Nodejs', 'Spring Boot', 'Git', 'Full Stack development', 'Machine Learning', 'Flask', 'C', 'Debugging', 'Linux', 'Numpy', 'Jira', 'Php', 'DBMS', 'Rest Apis'];
-  const groupedSkills = [];
-  const ids = ['20909', '3BTBsJs5myRy', '108784', '123603', 'PndQWK6M1Hjo', '74402', 'UFXRpPFebwa2', 'TpULddJc4gTh', '13679', '13441', 'hsPbhkOH4FMe', '90519', '52539', 'uE2XryncuEok', '114322', 'ewGOClUtmFX4', 'shQTXiDQiQVR', 'v7BkjmFjgswL', 'fG5Tnj4ARIoI', 'aR9CXyMagKIS', 'oROcPah5ues6', 'fAMVO_fuoOuC', '31478', '4jPFChei3uGs'];
-  const skillsWithIds = skills.map((skill, index) => [skill, ids[index]]);
+const SKILL_GROUPS = [
+  {
+    label: 'Languages & Frameworks',
+    color: '#7C3AED',
+    skills: [
+      'Java', 'Python', 'C++', 'JavaScript',
+      'Dropwizard', 'Spring Boot', 'AOP', 'Guice',
+      'REST APIs', 'ReactJS', 'Flask', 'Node.js',
+    ],
+  },
+  {
+    label: 'Messaging, Search & Databases',
+    color: '#0EA5E9',
+    skills: [
+      'Apache Kafka', 'Elasticsearch', 'Apache Pulsar',
+      'Apache ZooKeeper', 'MySQL', 'MongoDB', 'Redis',
+    ],
+  },
+  {
+    label: 'DevOps, Cloud & Concepts',
+    color: '#10B981',
+    skills: [
+      'Docker', 'Kubernetes', 'Google Cloud', 'Git', 'CI/CD', 'Linux',
+      'Grafana', 'System Design', 'Microservices', 'Design Patterns',
+      'CQRS', 'DSA', 'OOPs', 'DBMS', 'Agile', 'Load Testing',
+    ],
+  },
+];
 
-  for (let i = 0; i < skillsWithIds.length; i += 8) {
-    groupedSkills.push(skillsWithIds.slice(i, i + 8));
-  }
+const GROUP_COLORS = {
+  '#7C3AED': { bg: '#EDE9FE', text: '#5B21B6', border: '#C4B5FD' },
+  '#0EA5E9': { bg: '#DBEAFE', text: '#1E40AF', border: '#93C5FD' },
+  '#10B981': { bg: '#D1FAE5', text: '#065F46', border: '#6EE7B7' },
+};
+
+function SkillGroup({ label, color, skills, index }) {
+  const ref = useRef(null);
+  const c = GROUP_COLORS[color];
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('skill-group-visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div id='skills' className="pb-5" style={{ backgroundColor: 'coral' }}>
-
-      <div className='text-center fw-bold fs-1 text-dark py-3'>
-        <FontAwesomeIcon icon={faCode} />  Skills
+    <div
+      ref={ref}
+      className="skill-group-item"
+      style={{
+        transitionDelay: `${index * 0.13}s`,
+        background: '#fff',
+        borderRadius: 14,
+        padding: '1.1rem 0.75rem',
+        borderLeft: `5px solid ${color}`,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1rem' }}>
+        <div style={{ width: 10, height: 10, borderRadius: '50%', background: color }} />
+        <p style={{
+          fontSize: '0.82rem', fontWeight: 700,
+          color, textTransform: 'uppercase',
+          letterSpacing: '0.1em', margin: 0,
+        }}>
+          {label}
+        </p>
       </div>
-
-      <div className='container-fluid skills text-center bg-dark shadow rounded pb-3'>
-        <div id="carouselExampleInterval" className="carousel slide" data-bs-ride="carousel">
-          <div className="carousel-inner">
-            {groupedSkills.map((item, index) => (
-
-              <SkillsItem data={item} key={index} />
-            ))}
-
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-              <span className="carousel-control-next-icon"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
-
-        </div>
+      <div>
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className="skill-tag"
+            style={{
+              backgroundColor: c.bg,
+              color: c.text,
+              borderColor: c.border,
+              '--hover-bg': color,
+            }}
+          >
+            {skill}
+          </span>
+        ))}
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Skills
+function Skills() {
+  return (
+    <section id="skills" style={{ padding: '4rem 0.25rem', backgroundColor: '#111827' }}>
+      <Container fluid>
+        <h2 className="section-title">Technical Skills</h2>
+        <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+          {SKILL_GROUPS.map(({ label, color, skills }, idx) => (
+            <SkillGroup key={label} label={label} color={color} skills={skills} index={idx} />
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export default Skills;
