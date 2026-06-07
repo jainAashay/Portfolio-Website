@@ -37,11 +37,11 @@ const ALL_PROJECTS = [
   {
     id: 3,
     image: 'DBB',
-    heading: 'Schema Manager',
-    description: 'Full-stack web application enabling user authentication and multi-schema data management. Supports upload via Excel, dynamic form entry, view/update/delete, and Excel download.',
-    projectCode: 'https://aashay-jain.netlify.app/schema-manager',
-    projectLink: 'https://aashay-jain.netlify.app/schema-manager',
-    tags: ['React', 'Flask', 'MongoDB'],
+    heading: 'DataForge — Your Personal API-Accessible Database',
+    description: 'Define typed schemas, store structured data, and query it via REST API — all through a clean dashboard. Supports strict field validation, bulk CSV/XLSX ingestion, and type-aware filters. No infrastructure setup required.',
+    projectCode: 'https://aashay-jain.netlify.app/dataforge',
+    projectLink: 'https://aashay-jain.netlify.app/dataforge',
+    tags: ['React', 'Flask', 'MongoDB', 'REST API', 'JWT Auth'],
   },
   {
     id: 4,

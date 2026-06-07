@@ -17,11 +17,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/schema-manager" element={<SchemaManagerHome />} />
+        <Route path="/dataforge" element={<SchemaManagerHome />} />
         <Route path="/student-information" element={<StudentInformation />} />
         <Route path="/student-information/update" element={<StudentInformationUpdate />} />
         <Route path="/student-information/delete" element={<StudentInformationDelete />} />
-        <Route path="/schema-manager/schema/:schema/view" element={<SchemaDataView />} />
+        <Route path="/dataforge/schema/:schema/view" element={<SchemaDataView />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

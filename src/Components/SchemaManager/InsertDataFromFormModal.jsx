@@ -1,128 +1,127 @@
-import React, { useRef } from 'react'
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import backend_endpoint from '../Constants';
 import Cookies from 'js-cookie';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
+import './SchemaManager.css';
 
 function InsertDataFromFormModal({ schema }) {
-    const [inputList, setInputList] = useState([]);
-    const [inputPayload, setInputPayload] = useState({});
-    const [inputValue, setInputValue] = useState('');
+  const [inputList, setInputList] = useState([]);
+  const [inputPayload, setInputPayload] = useState({});
+  const [inputValue, setInputValue] = useState('');
+  const closeButtonRef = useRef(null);
 
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    const updated = { ...inputPayload, [id]: value };
+    setInputPayload(Object.fromEntries(Object.entries(updated).filter(([, v]) => v?.trim())));
+  };
 
-    const closeButtonRef = useRef(null);
-
-    const handleInputChange = (event) => {
-        const { id, value } = event.target;
-    
-        // Update inputPayload with the new value
-        const updatedPayload = {
-            ...inputPayload,
-            [id]: value,
-        };
-    
-        // Remove keys with null or empty values
-        const cleanedPayload = Object.fromEntries(
-            Object.entries(updatedPayload).filter(([key, val]) => val?.trim())
-        );
-    
-        setInputPayload(cleanedPayload);
-        console.log(cleanedPayload);
-    };
-
-    function handleAddKey() {
-        if (inputValue.trim() && !inputList.includes(inputValue)) { // Ensure the input is not empty or just whitespace
-            setInputList([...inputList, inputValue]); // Create a new array with the added value
-            setInputValue(''); // Clear the input field after adding
-        }
+  function handleAddKey() {
+    if (inputValue.trim() && !inputList.includes(inputValue.trim())) {
+      setInputList([...inputList, inputValue.trim()]);
+      setInputValue('');
     }
+  }
 
-    const handleRemoveKey = (indexToRemove) => {
-        const keyToRemove = inputList[indexToRemove];
-        setInputList(inputList.filter((_, index) => index !== indexToRemove));
-        const updatedPayload = { ...inputPayload };
-        delete updatedPayload[keyToRemove];
-        setInputPayload(updatedPayload);
-    };
-    
-    const handleInsert = async () => {
-        if (inputPayload) {
-            const inputData=[];
-            inputData.push(inputPayload);
-            const request={
-                data: inputData
-            }
-            try {
-                const loginToken = Cookies.get('login_token');
-                const response = await axios.post(backend_endpoint + '/schema_manager/schema/' + schema + '/insert',
-                    request,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${loginToken}`
-                        },
-                        validateStatus: (status) => true
-                    });
-    
-                if (response.status == 200) {
-                    toast.success("Data ingested successfully");
-                }
-                else {
-                    toast.error(response.data.message);
-                }
-            } catch (error) {
-                toast.error("An error occured, please try again later !");
-            }
-        }
-        else{
-            toast.error("Input Data cannot be null/empty.")
-        }
-    };
+  const handleKeyDown = (e) => { if (e.key === 'Enter') handleAddKey(); };
 
-    return (
-        <div className="modal fade" id="insertFormDataModal" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-                <div className="modal-content" style={{ backgroundColor: 'antiquewhite' }}>
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel" style={{ color: 'crimson' }}>Insert Data through Form</h1>
-                        <button type="button" className="btn-close" ref={closeButtonRef} data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+  const handleRemoveKey = (i) => {
+    const key = inputList[i];
+    setInputList(inputList.filter((_, idx) => idx !== i));
+    const updated = { ...inputPayload };
+    delete updated[key];
+    setInputPayload(updated);
+  };
 
-                    <div className="modal-body">
-                        {
-                            inputList.map((input, index) => (
-                                <div className="mb-3 " key={index}>
-                                    <button
-                                        className="btn-close float-end"
-                                        style={{ top: '10px', right: '10px' }}
-                                        onClick={() => handleRemoveKey(index)}
-                                        aria-label="Close"
-                                    ></button>
-                                    <label htmlFor={input} className="form-label fw-bold fs-6" style={{ color: 'darkviolet' }}>{input}</label>
-                                    <input type="text" className="form-control" id={input} placeholder={input} value={inputPayload[input] || ''} onChange={handleInputChange} />
-                                </div>
-                            ))
-                        }
-                        <hr></hr>
-                        <div className='input-group'>
-                            <input type="text" className="form-control me-2" placeholder="Enter key name" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-                            <button className="btn btn-primary btn-success fw-bold px-3" onClick={handleAddKey}>
-                                Add <FontAwesomeIcon icon={faPlus} />
-                            </button>
-                        </div>
+  const handleInsert = async () => {
+    if (!Object.keys(inputPayload).length) {
+      toast.error('No data to insert — add at least one field.');
+      return;
+    }
+    try {
+      const loginToken = Cookies.get('login_token');
+      const response = await axios.post(
+        `${backend_endpoint}/schema_manager/schema/${schema}/insert`,
+        { data: [inputPayload] },
+        { headers: { Authorization: `Bearer ${loginToken}` }, validateStatus: () => true }
+      );
+      if (response.status === 200) {
+        toast.success('Row inserted successfully.');
+        closeButtonRef.current?.click();
+      } else {
+        toast.error(response.data?.message || 'Insert failed.');
+      }
+    } catch (err) {
+      toast.error('An error occurred. Please try again.');
+    }
+  };
 
-                    </div>
-                    <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" className="btn btn-primary" onClick={handleInsert} >Insert</button>
-                    </div>
+  return (
+    <div className="modal fade" id="insertFormDataModal" tabIndex="-1">
+      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content sm-modal-content">
+          <div className="modal-header sm-modal-header">
+            <h5 className="modal-title sm-modal-title">Insert Row via Form</h5>
+            <button
+              type="button"
+              className="btn-close btn-close-white"
+              ref={closeButtonRef}
+              data-bs-dismiss="modal"
+            />
+          </div>
 
+          <div className="modal-body">
+            {inputList.map((key, i) => (
+              <div className="mb-3" key={i}>
+                <div className="d-flex justify-content-between align-items-center mb-1">
+                  <label className="sm-label mb-0">{key}</label>
+                  <button className="sm-filter-chip-close" onClick={() => handleRemoveKey(i)}>
+                    <FontAwesomeIcon icon={faTimes} />
+                  </button>
                 </div>
+                <input
+                  type="text"
+                  className="form-control sm-input"
+                  id={key}
+                  placeholder={`Value for ${key}`}
+                  value={inputPayload[key] || ''}
+                  onChange={handleInputChange}
+                />
+              </div>
+            ))}
+
+            <hr style={{ borderColor: 'rgba(255,255,255,0.08)', margin: '1rem 0' }} />
+
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control sm-input"
+                placeholder="Add a field name…"
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <button
+                className="sm-btn-primary"
+                style={{ borderRadius: '0 8px 8px 0', padding: '0 1rem' }}
+                onClick={handleAddKey}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
             </div>
+          </div>
+
+          <div className="modal-footer sm-modal-footer">
+            <button type="button" className="sm-btn-outline" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" className="sm-btn-primary" onClick={handleInsert}>Insert</button>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default InsertDataFromFormModal
+export default InsertDataFromFormModal;
