@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faPlus, faSquarePlus, faTrashAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
-import './SchemaManager.css'
+import './SchemaManager.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import CreateSchemaModal from './CreateSchemaModal';
@@ -19,155 +19,147 @@ function SchemaManagerHome() {
   const [filteredSchemas, setFilteredSchemas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [errorMessage,setErrorMessage] = useState('');
-  const [pointedSchema,setPointedSchema] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [pointedSchema, setPointedSchema] = useState('');
 
   useLoginModal();
 
   const fetchSchemas = async () => {
     try {
-      const loginToken = Cookies.get('login_token') || ''; 
-      console.log(loginToken);
+      const loginToken = Cookies.get('login_token') || '';
       const response = await axios.get(backend_endpoint + '/schema_manager/schemas/view', {
-        headers: {
-          Authorization: `Bearer ${loginToken}` // Set the authorization header
-        },
-        validateStatus: (status) => status < 500
+        headers: { Authorization: `Bearer ${loginToken}` },
+        validateStatus: (status) => status < 500,
       });
-      console.log(response);
-      if(response.status == 200){
-        console.log(response.data.schemas);
-        const initialSchema = response.data.schemas.map(schema => schema.name);
-        setSchemas(initialSchema);
-        setFilteredSchemas(initialSchema);
-      }
-      else{
+      if (response.status === 200) {
+        const names = response.data.schemas.map(s => s.name);
+        setSchemas(names);
+        setFilteredSchemas(names);
+      } else {
         setError(true);
-        setErrorMessage("Unauthored ! Please login and try again !");
+        setErrorMessage('Unauthorized — please log in and try again.');
       }
-        
-      
-    } catch (error) {
+    } catch (err) {
       setError(true);
-      setErrorMessage("An error occured while fetching schemas. Please try again later");
-      console.error('Error fetching schemas:', error);
-    }
-    finally {
+      setErrorMessage('Failed to fetch schemas. Please try again later.');
+    } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchSchemas();
-  }, []);
+  useEffect(() => { fetchSchemas(); }, []);
 
   useEffect(() => {
-    // Filter schemas based on search input
-    setFilteredSchemas(
-      schemas.filter(schema =>
-        schema.toLowerCase().includes(search.toLowerCase())
-      )
-    );
+    setFilteredSchemas(schemas.filter(s => s.toLowerCase().includes(search.toLowerCase())));
   }, [search, schemas]);
-
-  const handleSearch = (e) => {
-    const value = e.target.value; // Get the input value
-    setSearch(value); // Update the search state
-    // Filter schemas based on the search input
-    setFilteredSchemas(
-      schemas.filter(schema =>
-        schema.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-  };
 
   const handleDelete = async (schema) => {
     const loginToken = Cookies.get('login_token');
-    const response = await axios.delete(backend_endpoint + '/schema_manager/schema/' + schema + '/delete', {
-      headers: {
-        Authorization: `Bearer ${loginToken}` // Set the authorization header
-      },
-      validateStatus: (status) => {
-        return true;
-      }
-    });
-    if (response.status == 200) {
+    const response = await axios.delete(
+      `${backend_endpoint}/schema_manager/schema/${schema}/delete`,
+      { headers: { Authorization: `Bearer ${loginToken}` }, validateStatus: () => true }
+    );
+    if (response.status === 200) {
       fetchSchemas();
-      toast.success("Schema : " + schema +" deleted successfully !")
-      console.log('Delete schema with name :', schema);
-    }
-    else {
-      toast.error(response.data.message)
-      console.log(response.data);
+      toast.success(`Schema "${schema}" deleted.`);
+    } else {
+      toast.error(response.data.message);
     }
   };
 
-
   return (
-    <div style={{ backgroundColor: 'skyblue' }}>
+    <div className="sm-page">
       <Model />
       <CreateSchemaModal />
       <InsertDataModel schema={pointedSchema} />
       <InsertDataFromFormModal schema={pointedSchema} />
-      <ToastContainer/>
-      <div className="container pt-4 responsive-container" style={{ width: '60%' }}>
-        <div className='py-3 text-center'>
-          <h1 className='fw-bold pb-2 text-danger'>Schema Manager</h1>
-          <h6 className='fst-italic fw-bold pb-4'>Store all your data at one place systematically</h6>
-        </div>
-        <div className="row mb-4">
-          <div className='col-7 g-0'>
-            <InputGroup >
-              <FormControl
-                placeholder="Search schema"
-                value={search}
-                onChange={handleSearch}
-              />
-            </InputGroup>
-          </div>
-          <div className='col-5 g-0'>
-            <Button className='float-end' data-bs-toggle="modal" data-bs-target="#createSchemaModal" variant="primary">Create New <FontAwesomeIcon icon={faPlus} /></Button>
-          </div>
+      <ToastContainer theme="dark" />
 
+      <div className="container pt-5 sm-container" style={{ width: '62%' }}>
+        <div className="text-center pb-4">
+          <h1 className="section-title">DataForge</h1>
+          <p className="sm-subtitle">Your Personal API-Accessible Database</p>
         </div>
 
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" variant="primary" />
-            <p>Loading...</p>
+        <div className="d-flex gap-2 mb-4">
+          <div className="flex-grow-1">
+            <input
+              className="sm-search-input form-control"
+              placeholder="Search schemas…"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
           </div>
-        ) : error ? (
-          <div className="row text-center">
-            <div className='col-12 p-3 fw-bold fst-italic'>{errorMessage}</div>
-          </div>
-        ) : (<div></div>)}
+          <button
+            className="sm-btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#createSchemaModal"
+          >
+            <FontAwesomeIcon icon={faPlus} className="me-1" /> Create New
+          </button>
+        </div>
 
-        {filteredSchemas.length > 0 ? (
-          filteredSchemas.map((schema, index) => (
-            <div className="row py-3 shadow rounded border my-2" style={{ backgroundColor: 'antiquewhite' }} key={index}>
-              <div className='fw-bold fs-5 col-sm-12 col-md-8 col-lg-8'>{schema}</div>
-              <div className="col-sm-12 col-md-4 col-lg-4" >
-                <div className='alignment align-items-center'>
-                  <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faTrashAlt} style={{ color: 'red' }} onClick={() => handleDelete(schema)}/>
-                  <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faUpload} style={{ color: 'black' }} data-bs-toggle="modal" data-bs-target="#insertDataModal" onClick={() => {setPointedSchema(schema)}}/> 
-                   <FontAwesomeIcon className='action-item pt-1 pe-1' icon={faSquarePlus} style={{ color: 'darkmagenta' }} data-bs-toggle="modal" data-bs-target="#insertFormDataModal" onClick={() => {setPointedSchema(schema)}}/> 
-                  <a href={`/schema-manager/schema/${schema}/view`}  target="_blank"  rel="noopener noreferrer"  className='pe-1' >
-                    <FontAwesomeIcon className='action-item pt-1' icon={faEye} style={{ color: 'green' }}/>
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="row text-center fst-italic">
-            <div className='col-12 p-3'>No schemas found</div>
+        {loading && (
+          <div className="text-center py-5">
+            <Spinner animation="border" style={{ color: '#818CF8' }} />
+            <p className="sm-subtitle mt-2">Loading schemas…</p>
           </div>
         )}
 
+        {!loading && error && (
+          <div className="sm-error-state">{errorMessage}</div>
+        )}
+
+        {!loading && !error && filteredSchemas.length === 0 && (
+          <div className="sm-empty-state">
+            {search ? `No schemas match "${search}"` : 'No schemas yet — create one to get started.'}
+          </div>
+        )}
+
+        {!loading && !error && filteredSchemas.map((schema, i) => (
+          <div className={`sm-card sm-card--accent-${i % 4} mb-3`} key={i}>
+            <span className="sm-card-name">{schema}</span>
+            <div className="sm-card-actions">
+              <button
+                className="sm-icon-btn sm-icon-btn--danger"
+                data-tooltip="Delete schema"
+                onClick={() => handleDelete(schema)}
+              >
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </button>
+              <button
+                className="sm-icon-btn sm-icon-btn--upload"
+                data-tooltip="Upload CSV / XLSX"
+                data-bs-toggle="modal"
+                data-bs-target="#insertDataModal"
+                onClick={() => setPointedSchema(schema)}
+              >
+                <FontAwesomeIcon icon={faUpload} />
+              </button>
+              <button
+                className="sm-icon-btn sm-icon-btn--add"
+                data-tooltip="Insert row via form"
+                data-bs-toggle="modal"
+                data-bs-target="#insertFormDataModal"
+                onClick={() => setPointedSchema(schema)}
+              >
+                <FontAwesomeIcon icon={faSquarePlus} />
+              </button>
+              <a
+                href={`/dataforge/schema/${schema}/view`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sm-icon-btn sm-icon-btn--view"
+                data-tooltip="View data"
+              >
+                <FontAwesomeIcon icon={faEye} />
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
-
   );
 }
 
-export default SchemaManagerHome
+export default SchemaManagerHome;

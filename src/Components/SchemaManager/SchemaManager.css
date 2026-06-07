@@ -1,37 +1,515 @@
-
-.alignment {
-    float: right;
+/* ── Page wrapper ── */
+.sm-page {
+  background-color: var(--color-bg);
+  min-height: 100vh;
+  padding-bottom: 3rem;
 }
 
-.responsive-container{
-    min-height: 100vh;
+.sm-container {
+  min-height: 100vh;
 }
 
-.action-item{
-    padding-left: 1rem;
-    cursor: pointer;
-    font-size: 1.2em;
-    
+/* ── Subtitle ── */
+.sm-subtitle {
+  color: #94A3B8;
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-bottom: 0;
 }
 
-@media screen and (max-width:576px) {
-    .responsive-container{
-        width: 90% !important;;
-    }
-    .actions{
-      padding-top: 1rem;
-      float: left !important;
-    }
-    .action-item{
-        padding-left: 0px !important;
-        padding-right: 1.5rem !important;
-    
-    }
-    .alignment{
-        float:none;
-        padding-top: 10px;
-        justify-content: space-between;
-    }
+/* ── Error state ── */
+.sm-error-state {
+  text-align: center;
+  color: #F87171;
+  font-style: italic;
+  padding: 2rem 0;
 }
 
+/* ── Empty state ── */
+.sm-empty-state {
+  text-align: center;
+  color: #94A3B8;
+  font-style: italic;
+  padding: 3rem 0;
+}
 
+/* ── Search input ── */
+.sm-search-input {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #F1F5F9 !important;
+  border-radius: 8px !important;
+}
+
+.sm-search-input::placeholder {
+  color: #64748B !important;
+}
+
+.sm-search-input:focus {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: #4338CA !important;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.25) !important;
+  color: #F1F5F9 !important;
+  outline: none !important;
+}
+
+/* ── Schema cards ── */
+.sm-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.sm-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+/* cycling accent colors for schema cards */
+.sm-card--accent-0 { border-left: 4px solid #818CF8; background: rgba(129, 140, 248, 0.38); }
+.sm-card--accent-1 { border-left: 4px solid #34D399; background: rgba(52, 211, 153, 0.32); }
+.sm-card--accent-2 { border-left: 4px solid #F472B6; background: rgba(244, 114, 182, 0.32); }
+.sm-card--accent-3 { border-left: 4px solid #FBBF24; background: rgba(251, 191, 36, 0.28); }
+
+.sm-card-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #F1F5F9;
+  word-break: break-all;
+}
+
+.sm-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+/* ── Icon buttons ── */
+.sm-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: #94A3B8;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.sm-icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.sm-icon-btn--danger  { color: #F87171; }
+.sm-icon-btn--upload  { color: #60A5FA; }
+.sm-icon-btn--add     { color: #A78BFA; }
+.sm-icon-btn--view    { color: #34D399; }
+
+.sm-icon-btn--danger:hover  { background: rgba(239, 68, 68, 0.18); }
+.sm-icon-btn--upload:hover  { background: rgba(59, 130, 246, 0.18); }
+.sm-icon-btn--add:hover     { background: rgba(167, 139, 250, 0.18); }
+.sm-icon-btn--view:hover    { background: rgba(16, 185, 129, 0.18); }
+
+/* ── Outline / primary buttons ── */
+.sm-btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #F1F5F9;
+  padding: 0.42rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.sm-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.sm-btn-primary {
+  background: #4338CA;
+  border: none;
+  color: #fff;
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.sm-btn-primary:hover {
+  background: #3730A3;
+  transform: translateY(-1px);
+}
+
+/* ── Table ── */
+.sm-table-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(129, 140, 248, 0.2);
+  box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.06);
+}
+
+.sm-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #F1F5F9;
+  table-layout: fixed;
+  min-width: 400px;
+}
+
+.sm-table thead th {
+  background: linear-gradient(90deg, rgba(67, 56, 202, 0.45) 0%, rgba(99, 74, 232, 0.35) 100%);
+  color: #C4B5FD;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(129, 140, 248, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sm-table thead th:first-child {
+  width: 5.5rem;
+  text-align: center;
+}
+
+/* alternating rows: odd = deep indigo tint, even = near-transparent */
+.sm-table tbody tr:nth-child(odd) {
+  background: rgba(67, 56, 202, 0.07);
+}
+
+.sm-table tbody tr:nth-child(even) {
+  background: rgba(15, 14, 26, 0.6);
+}
+
+.sm-table tbody tr {
+  border-bottom: 1px solid rgba(129, 140, 248, 0.08);
+  transition: background 0.12s;
+}
+
+.sm-table tbody tr:hover {
+  background: rgba(129, 140, 248, 0.13);
+}
+
+.sm-table tbody td {
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  color: #CBD5E1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sm-table tbody td:first-child {
+  text-align: center;
+}
+
+/* ── Table row action buttons ── */
+.sm-tbl-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+  font-size: 0.82rem;
+}
+
+.sm-tbl-btn--edit { color: #818CF8; }
+.sm-tbl-btn--edit:hover { background: rgba(129, 140, 248, 0.15); }
+
+.sm-tbl-btn--del { color: #F87171; }
+.sm-tbl-btn--del:hover { background: rgba(248, 113, 113, 0.15); }
+
+/* ── Modal shared styles ── */
+.sm-modal-content {
+  background: #1A1826 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #F1F5F9 !important;
+}
+
+.sm-modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.sm-modal-title {
+  color: #818CF8 !important;
+  font-weight: 700 !important;
+}
+
+.sm-modal-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  gap: 0.5rem;
+}
+
+/* ── Dark inputs (modals + filter) ── */
+.sm-input {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #F1F5F9 !important;
+  border-radius: 8px !important;
+}
+
+.sm-input::placeholder {
+  color: #64748B !important;
+}
+
+.sm-input:focus {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-color: #4338CA !important;
+  box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.25) !important;
+  color: #F1F5F9 !important;
+  outline: none !important;
+}
+
+/* ── Labels ── */
+.sm-label {
+  display: block;
+  color: #818CF8;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.35rem;
+}
+
+/* ── Filter chips (tag pills) ── */
+.sm-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(129, 140, 248, 0.12);
+  border: 1px solid rgba(129, 140, 248, 0.28);
+  color: #A5B4FC;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0.2rem;
+}
+
+.sm-filter-chip-close {
+  background: none;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  font-size: 0.82rem;
+  transition: color 0.15s;
+}
+
+.sm-filter-chip-close:hover {
+  color: #F87171;
+}
+
+/* ── Icon button tooltip ── */
+.sm-icon-btn {
+  position: relative;
+}
+
+.sm-icon-btn::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1E1B30;
+  color: #C4B5FD;
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(129, 140, 248, 0.25);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.sm-icon-btn:hover::after {
+  opacity: 1;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 576px) {
+  .sm-container { width: 92% !important; }
+  .sm-card { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .sm-card-actions { width: 100%; }
+}
+
+/* ── Type badge ── */
+.sm-type-badge {
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(129, 140, 248, 0.12);
+  color: #818CF8;
+  letter-spacing: 0.04em;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+/* ── Active filter field ── */
+.sm-filter-field-active {
+  border-left: 2px solid #4338CA;
+  padding-left: 0.6rem;
+  margin-left: -0.6rem;
+  border-radius: 2px;
+}
+
+.sm-filter-field-active .sm-label {
+  color: #A5B4FC;
+}
+
+/* ── Per-field clear button ── */
+.sm-filter-clear-btn {
+  background: none;
+  border: none;
+  color: #64748B;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.75rem;
+  line-height: 1;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.sm-filter-clear-btn:hover {
+  color: #F87171;
+}
+
+/* ── Boolean toggle ── */
+.sm-bool-toggle {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sm-bool-toggle-btn {
+  flex: 1;
+  padding: 0.38rem 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  color: #94A3B8;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sm-bool-toggle-btn:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sm-bool-toggle-btn--active {
+  background: rgba(67, 56, 202, 0.32);
+  color: #A5B4FC;
+  font-weight: 600;
+}
+
+/* ── Active filter count badge on toggle button ── */
+.sm-filter-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 50%;
+  background: #4338CA;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  pointer-events: none;
+}
+
+/* ── Column resize handle ── */
+.sm-col-resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 0.15s;
+  z-index: 3;
+}
+
+.sm-col-resize-handle:hover,
+.sm-col-resize-handle:active {
+  background: rgba(129, 140, 248, 0.5);
+}
+
+/* ── Field definition row in CreateSchemaModal ── */
+.sm-field-def-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 36px 28px;
+  gap: 0.4rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.sm-field-def-select {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #F1F5F9 !important;
+  border-radius: 8px !important;
+  padding: 0.42rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.sm-field-def-select option {
+  background: #1A1826;
+}
+
+.sm-range-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.sm-date-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.sm-input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}

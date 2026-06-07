@@ -1,99 +1,81 @@
 import axios from 'axios';
-import { data } from 'jquery'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import backend_endpoint from '../Constants';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import './SchemaManager.css';
 
 function SchemaDataUpdate({ data }) {
   const [formData, setFormData] = useState({ ...data });
-
-  useEffect(() => {
-    setFormData({ ...data }); // Update formData when data changes
-  }, [data]);
-
   const { schema } = useParams();
-
   const closeButtonRef = useRef(null);
+
+  useEffect(() => { setFormData({ ...data }); }, [data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async () => {
     try {
-      console.log(formData);
       const loginToken = Cookies.get('login_token');
-      const response = await axios.put(backend_endpoint + '/schema_manager/schema/' + schema + '/data/update',formData, {
-        headers: {
-          Authorization: `Bearer ${loginToken}` // Set the authorization header
-        }
-      });
-      if (response.status == 200) {
-        toast.success("Data Updated Successfuly. Please reload the page");
-        if (closeButtonRef.current) {
-          closeButtonRef.current.click();
+      const response = await axios.put(
+        `${backend_endpoint}/schema_manager/schema/${schema}/data/update`,
+        formData,
+        { headers: { Authorization: `Bearer ${loginToken}` } }
+      );
+      if (response.status === 200) {
+        toast.success('Row updated. Reload to see changes.');
+        closeButtonRef.current?.click();
+      } else if (response.status === 401) {
+        toast.error('Unauthorized — please log in.');
+      } else {
+        toast.error('Update failed. Please try again.');
       }
-      }
-      else if (response.status == 401) {
-        toast.error("Unauthored ! Please login and try again !");
-      }
-      else {
-        toast.error("An error occured.Pls try again");
-      }
+    } catch (err) {
+      toast.error(err.message);
     }
-    catch (error) {
-      toast.error(error.message);
-      console.log(error);
-    }
-    
   };
 
   return (
-    <div className="modal fade" id="UpdateDataModal" >
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content" style={{backgroundColor:'bisque'}}>
-          <div className="modal-header">
-            <h1 className="modal-title fs-5 fw-bold" id="exampleModalLabel" style={{ color: 'crimson' }}>Edit Row</h1>
-            <button type="button" className="btn-close bg-light" ref={closeButtonRef} data-bs-dismiss="modal" aria-label="Close"></button>
+    <div className="modal fade" id="UpdateDataModal">
+      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content sm-modal-content">
+          <div className="modal-header sm-modal-header">
+            <h5 className="modal-title sm-modal-title">Edit Row</h5>
+            <button
+              type="button"
+              className="btn-close btn-close-white"
+              ref={closeButtonRef}
+              data-bs-dismiss="modal"
+            />
           </div>
 
-          <div className="modal-body text-dark">
-
-            <form>
-              {
-                
-                Object.keys(formData).filter((key) => key != '_id').map((key) => (
-                  <div className="mb-3" key={key}>
-                    <label htmlFor={`form-${key}`} className="form-label fw-bold text-primary">
-                      {key}
-                    </label>
-                    <input type="text" className="form-control" id={`form-${key}`} name={key} value={formData[key] || ''} onChange={handleChange}/>
-                  </div>
-                ))
-              }
-
-            </form>
-
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-              Discard
-            </button>
-            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-              Save
-            </button>
+          <div className="modal-body">
+            {Object.keys(formData || {}).filter(k => k !== '_id').map(key => (
+              <div className="mb-3" key={key}>
+                <label className="sm-label">{key}</label>
+                <input
+                  type="text"
+                  className="form-control sm-input"
+                  name={key}
+                  value={formData[key] ?? ''}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </div>
 
+          <div className="modal-footer sm-modal-footer">
+            <button type="button" className="sm-btn-outline" data-bs-dismiss="modal">Discard</button>
+            <button type="button" className="sm-btn-primary" onClick={handleSubmit}>Save</button>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default SchemaDataUpdate
+export default SchemaDataUpdate;

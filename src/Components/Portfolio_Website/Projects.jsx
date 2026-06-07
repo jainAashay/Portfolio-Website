@@ -23,12 +23,12 @@ const FEATURED_PROJECTS = [
   },
   {
     id: 2,
-    image: 'DBB',
-    heading: 'Schema Manager',
-    description: 'Full-stack app with user authentication and multi-schema data management. Upload via Excel, dynamic form entry, view/update/delete, and Excel download.',
-    projectCode: 'https://aashay-jain.netlify.app/schema-manager',
-    projectLink: 'https://aashay-jain.netlify.app/schema-manager',
-    tags: ['React', 'Flask', 'MongoDB','Docker'],
+    image: 'DataForge',
+    heading: 'DataForge — Your Personal API-Accessible Database',
+    description: 'Define typed schemas, store structured data, and query it via REST API — all through a clean dashboard. Supports strict field validation, bulk CSV/XLSX ingestion, and type-aware filters.',
+    projectCode: 'https://aashay-jain.netlify.app/dataforge',
+    projectLink: 'https://aashay-jain.netlify.app/dataforge',
+    tags: ['React', 'Flask', 'MongoDB', 'REST API', 'JWT Auth'],
   },
 ];
 
